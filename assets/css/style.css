@@ -73,6 +73,9 @@ img{max-width:100%;height:auto;display:block;}
 .nav__links a:hover{background:rgba(255,255,255,.12);color:#fff;text-decoration:none;}
 .nav__links a.cta{background:var(--yellow);color:var(--purple-deep);margin-left:6px;box-shadow:0 6px 16px rgba(247,182,23,.32);}
 .nav__links a.cta:hover{background:#ffca3f;transform:translateY(-1px);}
+/* Przełącznik języka PL/EN — dyskretna ramka, wyraźnie oddzielony od menu */
+.nav__links a.lang-switch{margin-left:8px;border:1px solid rgba(255,255,255,.28);font-size:.85rem;letter-spacing:.04em;opacity:.85;}
+.nav__links a.lang-switch:hover{opacity:1;border-color:rgba(255,255,255,.5);}
 .nav__toggle{display:none;background:transparent;border:0;color:#fff;font-size:1.7rem;cursor:pointer;padding:4px 8px;line-height:1;}
 @media (max-width:900px){
   .nav__toggle{display:block;}
@@ -80,6 +83,7 @@ img{max-width:100%;height:auto;display:block;}
   .nav__links.open{display:flex;}
   .nav__links a{width:100%;}
   .nav__links a.cta{margin-left:0;margin-top:6px;text-align:center;}
+  .nav__links a.lang-switch{margin-left:0;margin-top:6px;text-align:center;}
 }
 
 /* ---------- BUTTONS ---------- */
