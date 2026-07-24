@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oyey — gry imprezowe na telefon | Pytania i wyzwania od 16 lat</title>
+  <meta name="description" content="Oyey to gry imprezowe na telefon: pytania i wyzwania, „daj to osobie", „nigdy przenigdy" i więcej. Telefon krąży w kółko, bez kont, działa offline. Gra od 16 lat.">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="container">
+      <a class="nav__brand" href="index.html" aria-label="Oyey — strona główna">
+        <span class="wordmark nav__wordmark">oyey</span>
+      </a>
+      <button class="nav__toggle" aria-label="Menu" onclick="document.getElementById('nav-links').classList.toggle('open')">☰</button>
+      <nav class="nav__links" id="nav-links">
+        <a href="#jak">Jak grać</a>
+        <a href="#gry">Gry</a>
+        <a href="#dlaczego">Dlaczego Oyey</a>
+        <a href="support.html">Pomoc</a>
+        <a href="privacy.html">Prywatność</a>
+        <a class="cta" href="#pobierz">Pobierz</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero__grid">
+      <div>
+        <span class="age-pill">🔞 Gra od 16 lat · tryb 18+ opcjonalny</span>
+        <h1>Impreza zaczyna się od <span class="hl">jednego telefonu</span>.</h1>
+        <p class="lead">Pytania i wyzwania, „daj to osobie", „nigdy przenigdy" i więcej. Telefon krąży w kółko — reszta robi się sama.</p>
+        <div class="hero__badges">
+          <span class="badge">📴 Działa offline</span>
+          <span class="badge">🙅 Bez konta</span>
+          <span class="badge">🎉 7 gier na start</span>
+        </div>
+        <div class="btns" id="pobierz">
+          <!-- DO UZUPEŁNIENIA: wstaw prawdziwy link do App Store po publikacji -->
+          <a class="btn btn--app" href="#" aria-label="Pobierz z App Store">
+            <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C71.9 141.1 16 184.6 16 273.5c0 26.3 4.8 53.5 14.4 81.5 12.8 36.9 59 127.2 107.2 125.7 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.8 102.6-119.8-65.2-30.7-61.7-90-61.7-92.9zM255.7 90.8c30.4-36.1 27.7-69 26.8-80.8-26.9 1.6-58 18.4-75.7 39.1-19.5 22.2-31 49.7-28.5 79.1 29.1 2.3 55.7-12.7 77.4-37.4z"/></svg>
+            <span class="store-txt"><span class="store-sub">Pobierz w</span><span class="store-main">App Store</span></span>
+          </a>
+          <a class="btn btn--ghost" href="#gry">Zobacz gry</a>
+        </div>
+        <p class="hero__note">Dostępne na iPhone. Wersja polska — kolejne języki wkrótce.</p>
+      </div>
+      <div class="hero__mascot">
+        <img src="assets/img/mascot-happy.png" alt="Maskotka Oyey" loading="eager">
+      </div>
+    </div>
+    <div class="hero__wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><path fill="#FBF3E4" d="M0,40 C240,72 480,72 720,48 C960,24 1200,8 1440,36 L1440,70 L0,70 Z"></path></svg>
+    </div>
+  </section>
+
+  <!-- JAK GRAĆ -->
+  <section id="jak">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Jak grać</span>
+        <h2>Trzy kroki i gracie</h2>
+        <p>Zero przygotowań, zero logowania. Telefon robi całą robotę.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <h3>Wybierzcie grę</h3>
+          <p>Domówka, para, wieczór panieński — otwieracie grę i ustawiacie ostrość pytań.</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <h3>Telefon krąży w kółko</h3>
+          <p>Każdy czyta swoją kartę na głos, wykonuje zadanie i podaje telefon dalej.</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <h3>Wy ustalacie kary</h3>
+          <p>Kara jest konfigurowalna — wyzwanie, przysiad albo własny pomysł ekipy.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRY -->
+  <section id="gry" class="games-section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">W środku</span>
+        <h2>7 gier na start</h2>
+        <p>Klasyki domówki w jednej apce. Każda gra to setki kart z gradacją ostrości.</p>
+      </div>
+      <div class="games">
+        <div class="game"><span class="tag">Klasyk</span><h3>Wypij / zrób, jeśli…</h3><p>„…jeśli sprawdzałeś dziś czyjś profil więcej niż trzy razy". Kto pasuje — wpada i robi karę ustaloną przez ekipę. Najszybszy sposób, żeby stół ryknął śmiechem.</p></div>
+        <div class="game"><span class="tag">Karta krąży</span><h3>Daj to osobie, która…</h3><p>„…która najszybciej się zakochuje". Wskazujecie winowajcę, telefon ląduje u niego — i on czyta następną kartę. Zobaczcie, kto zbierze ich najwięcej.</p></div>
+        <div class="game"><span class="tag">Karta krąży</span><h3>Nigdy przenigdy…</h3><p>Telefon krąży, a sekrety wychodzą na jaw. Kto to zrobił — przyznaje się. Uniwersalne formy, gra każdy i każdy się sypie.</p></div>
+        <div class="game"><span class="tag">Wybór</span><h3>Pytanie czy wyzwanie</h3><p>Klasyka w ostrzejszej wersji: 250 szczerych pytań i 250 wyzwań. Odpowiadasz albo działasz — spasujesz i wpadasz.</p></div>
+        <div class="game"><span class="tag">Na 3-2-1</span><h3>Jest 10 na 10, ale…</h3><p>„…ale chrapie jak traktor". Na „3-2-1" kciuk w górę albo w dół — od razu widać, kto naprawdę ma gust. Szybkie, głośne, bezlitosne.</p></div>
+        <div class="game"><span class="tag">Dla par</span><h3>Edycja dla par</h3><p>Randka, która wywraca wieczór do góry nogami: prawda albo wyzwanie, „jak dobrze mnie znasz" i karty na gorąco tylko dla Was dwojga.</p></div>
+        <div class="game"><span class="tag">Panieński</span><h3>Damski wieczór</h3><p>Panieński gotowy w 60 sekund. Pięć rodzajów kart w jednej talii — śmiech, ploty i wyzwania, o których będziecie gadać do rana.</p></div>
+      </div>
+      <div class="mascots-row">
+        <img src="assets/img/mascot-happy.png" alt="">
+        <img src="assets/img/mascot-smile.png" alt="">
+        <img src="assets/img/mascot-love.png" alt="">
+        <img src="assets/img/mascot-devil.png" alt="">
+        <img src="assets/img/mascot-crazy.png" alt="">
+      </div>
+    </div>
+  </section>
+
+  <!-- DLACZEGO -->
+  <section id="dlaczego">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Dlaczego Oyey</span>
+        <h2>Ratownik każdej imprezy</h2>
+        <p>Cisza przy stole? Odpalasz Oyey i po 30 sekundach cała ekipa się śmieje. Bez osobnych apek, logowania i czekania na zasięg.</p>
+      </div>
+      <div class="features">
+        <div class="card">
+          <div class="ico">📴</div>
+          <h3>Gra wszędzie, bez zasięgu</h3>
+          <p>Działka, piwnica, autokar, samolot? Bez znaczenia. Po pobraniu wszystko jest w telefonie i gra śmiga offline.</p>
+        </div>
+        <div class="card">
+          <div class="ico">⚡</div>
+          <h3>Od zera do śmiechu w 30 sekund</h3>
+          <p>Żadnych rejestracji, maili i haseł. Wpisujecie imiona i już gracie — nikt nie musi instalować niczego u siebie.</p>
+        </div>
+        <div class="card">
+          <div class="ico">🎚️</div>
+          <h3>Kary, jakie chcecie</h3>
+          <p>Wy ustalacie stawkę: wyzwanie, przysiad czy własny pomysł. Gra dopasowuje się do ekipy, nie odwrotnie.</p>
+        </div>
+        <div class="card">
+          <div class="ico">🌶️</div>
+          <h3>Ostrość pod kontrolą</h3>
+          <p>Lajtowo na rozgrzewkę, ostrzej później. Tryb 18+ włączacie sami — domyślnie jest bezpiecznie dla każdej ekipy.</p>
+        </div>
+        <div class="card">
+          <div class="ico">🇵🇱</div>
+          <h3>Po polsku i naprawdę śmieszne</h3>
+          <p>Żadnych tłumaczonych na kolanie pytań. Piszemy po naszemu, o sytuacjach, które znacie z życia.</p>
+        </div>
+        <div class="card">
+          <div class="ico">🔄</div>
+          <h3>Za tydzień znów inna gra</h3>
+          <p>Dosypujemy nowe pytania i wyzwania do wydanych gier, więc kolejna impreza nigdy nie jest taka sama.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="container">
+      <div class="cta-strip">
+        <h2>Gotowi na dziś wieczór?</h2>
+        <p>Pobierz Oyey, wpiszcie imiona i zaczynajcie. Reszta zrobi się sama.</p>
+        <div class="btns">
+          <!-- DO UZUPEŁNIENIA: link do App Store -->
+          <a class="btn btn--yellow" href="#">
+            <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C71.9 141.1 16 184.6 16 273.5c0 26.3 4.8 53.5 14.4 81.5 12.8 36.9 59 127.2 107.2 125.7 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.8 102.6-119.8-65.2-30.7-61.7-90-61.7-92.9zM255.7 90.8c30.4-36.1 27.7-69 26.8-80.8-26.9 1.6-58 18.4-75.7 39.1-19.5 22.2-31 49.7-28.5 79.1 29.1 2.3 55.7-12.7 77.4-37.4z"/></svg>
+            Pobierz z App Store
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <span class="wordmark footer__wordmark">oyey</span>
+          <p style="max-width:34ch;">Gry imprezowe na telefon. Pytania i wyzwania dla całej ekipy. Bez kont, offline, po polsku.</p>
+          <p style="font-size:.85rem;">Gra od 16 lat. Opcjonalny tryb 18+ dostępny po potwierdzeniu pełnoletności.</p>
+        </div>
+        <div>
+          <h4>Produkt</h4>
+          <a href="#jak">Jak grać</a>
+          <a href="#gry">Gry</a>
+          <a href="support.html">Pomoc / Kontakt</a>
+        </div>
+        <div>
+          <h4>Informacje prawne</h4>
+          <a href="privacy.html">Polityka prywatności</a>
+          <a href="terms.html">Regulamin / Warunki</a>
+          <a href="data-deletion.html">Usuwanie danych</a>
+        </div>
+      </div>
+      <div class="footer__legal">
+        <span>© 2026 Oyey · Wszelkie prawa zastrzeżone</span>
+        <span><a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a> · oyey.eu</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
