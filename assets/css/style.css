@@ -215,6 +215,22 @@ section{padding:80px 0;}
 .phone__actions .a.p{background:var(--pink);color:#fff;}
 .phone__actions .a.y{background:var(--yellow);color:var(--purple-deep);}
 
+/* SHOTS (galeria realnych ekranow) */
+.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;max-width:940px;margin:0 auto 44px;align-items:center;}
+.shot-phone{border-radius:36px;background:#1c0a2e;padding:8px;box-shadow:var(--shadow-lg);transition:transform .3s ease;}
+.shot-phone img{width:100%;display:block;border-radius:28px;}
+.shot-phone.shot-mid{transform:scale(1.06);}
+.shot-phone:hover{transform:translateY(-6px) scale(1.03);}
+.shot-phone.shot-mid:hover{transform:translateY(-6px) scale(1.09);}
+.showcase__list--row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:940px;margin:0 auto;padding:0;}
+.showcase__list--row li{padding:0;}
+@media(max-width:760px){
+  .shots{grid-template-columns:1fr;max-width:300px;gap:22px;}
+  .shot-phone.shot-mid{transform:none;}
+  .shot-phone.shot-mid:hover{transform:translateY(-6px) scale(1.03);}
+  .showcase__list--row{grid-template-columns:1fr;max-width:420px;}
+}
+
 /* DLACZEGO / FEATURES */
 .features{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
 .card{background:var(--surface);border-radius:var(--radius);padding:32px 30px;box-shadow:var(--shadow-sm);border:1px solid var(--border);transition:transform .2s ease,box-shadow .2s ease;}
