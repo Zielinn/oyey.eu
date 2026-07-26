@@ -110,10 +110,10 @@ img{max-width:100%;height:auto;display:block;}
   .nav__toggle{display:block;}
   .nav .container{width:auto;max-width:calc(100vw - 24px);gap:12px;justify-content:space-between;padding:9px 10px 9px 16px;}
   .nav.compact .container{padding:7px 9px 7px 14px;}
-  .nav__links{position:fixed;top:74px;left:16px;right:16px;flex-direction:column;align-items:stretch;
-    background:rgba(20,7,36,.98);-webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);
-    border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:8px;gap:2px;display:none;
-    box-shadow:0 26px 54px rgba(6,1,14,.62);transform-origin:top center;}
+  .nav__links{position:fixed;top:74px;left:0;right:0;margin:0 auto;width:min(330px,calc(100vw - 28px));flex-direction:column;align-items:stretch;
+    background:rgba(19,6,34,.98);-webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);
+    border:1px solid rgba(255,255,255,.16);border-radius:22px;padding:8px;gap:2px;display:none;
+    box-shadow:0 26px 56px rgba(6,1,14,.64);transform-origin:top center;}
   .nav.compact .nav__links{top:66px;}
   .nav__links.open{display:flex;animation:navMenuIn .26s cubic-bezier(.2,.7,.24,1);}
   @keyframes navMenuIn{from{opacity:0;transform:translateY(-10px) scale(.98)}to{opacity:1;transform:none}}
