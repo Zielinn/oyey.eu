@@ -8,7 +8,8 @@
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
-  <link rel="stylesheet" href="assets/css/style.css?v=5">
+  <link rel="stylesheet" href="assets/css/style.css?v=6">
+  <script src="assets/js/nav.js" defer></script>
 </head>
 <body>
 
@@ -47,7 +48,7 @@
         <a href="support.html">Pomoc</a>
         <a href="privacy.html">Prywatność</a>
         <a class="cta" href="#download">Pobierz</a>
-        <a href="privacy-en.html" class="lang-switch" hreflang="en" aria-label="English version">EN</a>
+        <a href="index-en.html" class="lang-switch" hreflang="en" aria-label="English version">EN</a>
       </nav>
     </div>
   </header>
@@ -328,14 +329,7 @@
       els.forEach(function(e){ io.observe(e); });
     } else { els.forEach(function(e){ e.classList.add('in'); }); }
 
-    // nav tło po scrollu
-    var nav = document.getElementById('nav');
-    window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.scrollY > 30); }, {passive:true});
-
-    // zamknij menu mobilne po kliknięciu linku
-    document.querySelectorAll('#nav-links a').forEach(function(a){
-      a.addEventListener('click', function(){ document.getElementById('nav-links').classList.remove('open'); });
-    });
+    // (nawigacja notch/kapsuła obsługiwana w assets/js/nav.js)
 
     // maskotka w rogu
     var mw = document.getElementById('mw');
