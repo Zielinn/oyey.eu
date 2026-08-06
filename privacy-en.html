@@ -5,10 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy — Oyey</title>
   <meta name="description" content="Privacy policy for the Oyey app. The app requires no account, and the only data it sends serves to settle codes. Data processing in line with the GDPR.">
+  <link rel="canonical" href="https://oyey.eu/privacy-en.html">
+  <link rel="alternate" hreflang="pl" href="https://oyey.eu/privacy.html">
+  <link rel="alternate" hreflang="en" href="https://oyey.eu/privacy-en.html">
+  <link rel="alternate" hreflang="x-default" href="https://oyey.eu/privacy.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Oyey">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:locale:alternate" content="pl_PL">
+  <meta property="og:url" content="https://oyey.eu/privacy-en.html">
+  <meta property="og:title" content="Privacy Policy — Oyey">
+  <meta property="og:description" content="Privacy policy for the Oyey app. The app requires no account, and the only data it sends serves to settle codes. Data processing in line with the GDPR.">
+  <meta property="og:image" content="https://oyey.eu/assets/img/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The Oyey mascot — party games on your phone">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Privacy Policy — Oyey">
+  <meta name="twitter:description" content="Privacy policy for the Oyey app. The app requires no account, and the only data it sends serves to settle codes. Data processing in line with the GDPR.">
+  <meta name="twitter:image" content="https://oyey.eu/assets/img/og-card.png">
+  <meta name="twitter:image:alt" content="The Oyey mascot — party games on your phone">
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
-  <link rel="stylesheet" href="assets/css/style.css?v=10">
+  <link rel="stylesheet" href="assets/css/style.css?v=11">
   <script src="assets/js/nav.js" defer></script>
 </head>
 <body class="doc">
@@ -74,7 +94,7 @@
     <ul>
       <li><strong>The app requires no account and no sign-in.</strong></li>
       <li>The app <strong>does not profile users</strong> and does no tracking whatsoever. It does not use location, the camera, the microphone, contacts, health data or advertising.</li>
-      <li>There is <strong>one exception</strong> to "we collect no data": codes. If you claim a reward with a code (from a creator, a discount code or a gift), your later purchases in the app carry an anonymous identifier that we use to settle the share owed to whoever gave you that code (see <a href="#kody">section 5</a>). <strong>Without a redeemed code that identifier is never created.</strong></li>
+      <li>There is <strong>one exception</strong> to “we collect no data”: codes. If you claim a reward with a code (from a creator, a discount code or a gift), we record that redemption and your later purchases in the app, so that we can settle the share owed to whoever gave you that code (see <a href="#kody">section 5</a>). They are tied together by an identifier assigned by Apple that holds none of your details — but <strong>we do not call it anonymous</strong>, because it links the purchases of one account. <strong>Without a redeemed code we record nothing about your purchases.</strong></li>
       <li>Once downloaded, the games run <strong>offline</strong>; content and settings (e.g. player names, spice level, choice of forfeits) are saved <strong>locally on your device</strong> and are never sent to us.</li>
       <li>Payments and subscriptions are handled by <strong>Apple</strong> within the App Store. It is Apple, not us, that processes transaction and payment data (see section 4).</li>
       <li>We process personal data only when <strong>you contact us yourself</strong> (e.g. a support e-mail or a bug report) — in that case we process the data you send us (see section 7).</li>
@@ -86,6 +106,7 @@
 
     <h2 id="dane">3. What data we process and why</h2>
     <p>Simply using the app (playing) means that <strong>we process no personal data at all</strong> on our servers. The table below covers the only situations in which data is processed — and shows who the controller is.</p>
+    <div class="table-scroll" tabindex="0">
     <table>
       <thead>
         <tr><th>Situation</th><th>Data</th><th>Purpose</th><th>Legal basis</th><th>Who processes it</th></tr>
@@ -121,7 +142,7 @@
         </tr>
         <tr>
           <td>A redeemed code</td>
-          <td>An anonymous purchase identifier and transaction data from Apple</td>
+          <td>An identifier assigned by Apple (holding none of your details) and transaction data from Apple</td>
           <td>Settling the share owed to whoever shared the code</td>
           <td>Art. 6(1)(f) and (c) GDPR, see <a href="#kody">section 5</a></td>
           <td>The controller (Oyey)</td>
@@ -135,6 +156,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
     <div class="note">
       <strong>Reporting bugs.</strong> The app does not automatically collect crash reports or diagnostic data. If something goes wrong, you may — voluntarily — send us a report by e-mail to <a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a>. We then process only what you send us yourself.
     </div>
@@ -152,20 +174,20 @@
     <h2 id="kody">5. Codes and the referral programme</h2>
     <p>You can claim a reward in the app with a code. We issue codes in three situations: as a <strong>creator code</strong> (someone who recommends Oyey to their audience), as a <strong>discount code</strong> and as a <strong>gift</strong>. For you they behave identically, and the App Store always performs the redemption, not us.</p>
 
-    <p><strong>What happens after you redeem a code.</strong> The app generates a random identifier (a UUID) on your device and attaches it to your later purchases as an <code>appAccountToken</code>, a mechanism Apple provides for exactly this purpose. The app does not send it anywhere by itself: the App Store passes it along with the purchase, and we learn about it from Apple's signed notification.</p>
+    <p><strong>What happens after you redeem a code.</strong> The app sends us nothing and stores no marker on your device for this purpose. The App Store performs the redemption and we learn about it from Apple's signed notification. That notification carries the identifier Apple assigns to the pair “your Apple account plus our app” (<code>appTransactionId</code>), which stays the same across reinstalls and new phones. That identifier — and nothing else — is how we link your later purchases in Oyey to the code you redeemed.</p>
 
-    <p><strong>What that identifier does not contain.</strong> No name, no address, no e-mail, no phone number, no device identifier and nothing from your Apple account. It cannot be used to work out who you are, including by us. It is <strong>pseudonymised</strong> data: on its own it identifies nobody, but we treat it as personal data under the GDPR because Apple could in principle link it to a person.</p>
+    <p><strong>What that identifier does not contain.</strong> No name, no address, no e-mail, no phone number, no device identifier and nothing from your Apple account. It cannot be used to work out who you are, including by us. <strong>It is not anonymous data, though</strong>, and we will not call it that: it ties together purchases made on one Apple account, and Apple can link it to a person. It is <strong>pseudonymised</strong> data, which we treat as personal data under the GDPR, with all the rights that gives you (see <a href="#prawa">section 11</a>).</p>
 
     <ul>
-      <li><strong>Data:</strong> the <code>appAccountToken</code>, Apple's transaction identifier, the product identifier, purchase date, amount and currency, storefront country, refund status, and the name of the offer the code belonged to.</li>
+      <li><strong>Data:</strong> the identifier assigned by Apple (<code>appTransactionId</code>), the transaction identifier, the product identifier, purchase date, amount and currency, storefront country, refund status, and the name of the offer the code belonged to.</li>
       <li><strong>Purpose:</strong> to determine and pay the share owed to the person who referred you, and to settle that programme.</li>
       <li><strong>Legal basis:</strong> Article 6(1)(f) GDPR (legitimate interest: settling a partner programme) and Article 6(1)(c) GDPR for accounting and tax obligations.</li>
       <li><strong>Retention:</strong> 12 months from redemption (the settlement window), and for records needed for accounting, the period required by law, namely 5 years from the end of the tax year.</li>
-      <li><strong>Recipients:</strong> the data comes from Apple and stays in our accounting systems. Apple's notifications arrive at an endpoint hosted on <strong>Cloudflare</strong> which <strong>does not store them</strong> and only acknowledges receipt. <strong>Creators receive no data about individual transactions or people</strong>, only the total amount owed to them.</li>
-      <li><strong>No code, no data:</strong> if you redeem no code, no identifier is created and your purchases reach us with no marker at all.</li>
+      <li><strong>Recipients:</strong> the data comes from Apple and stays in our accounting systems. Apple's notifications arrive at an endpoint hosted on <strong>Cloudflare</strong> which <strong>does not store them</strong> and only acknowledges receipt. <strong>A creator never learns from us who you are</strong>: we hand over no identifiers, no e-mail addresses and no “who bought what” list. What they get are numbers: how many people redeemed their code, how many purchases came of it and the amount owed to them — plus, if Apple refunded someone after we had already paid, a correction line with the product name and the refund date and nothing about the person (see <a href="creators-en.html#report">Creator programme, point 6</a>).</li>
+      <li><strong>No code, no record:</strong> if you redeem no code, your purchases never enter our referral register and leave no trace with us at all.</li>
     </ul>
 
-    <p><strong>Exercising your rights.</strong> We run no accounts and do not know your identity, so we cannot find your records from a name or an e-mail address. To request access or deletion, write to <a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a> and include the <strong>transaction identifier from your App Store receipt</strong> (App Store → your account → Purchase History). We will delete every matching record except those we are legally required to keep for accounting. See <a href="data-deletion-en.html">Data deletion</a>.</p>
+    <p><strong>Exercising your rights.</strong> We run no accounts and do not know your identity, so we cannot find your records from a name or an e-mail address. Write to <a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a> and give us enough to find the purchase in the register: the <strong>purchase date</strong>, the <strong>amount and currency</strong>, <strong>what was bought</strong> and the <strong>country of your App Store</strong>. All of it is on the receipt Apple e-mails you — you can simply forward it. It also helps to say which code you redeemed and roughly when. Apple's transaction identifier speeds things up but is <strong>not required</strong>: the App Store does not show it in your purchase history. We will delete every matching record except those we are legally required to keep for accounting. See <a href="data-deletion-en.html">Data deletion</a>.</p>
 
     <p><strong>There is no tracking.</strong> We never combine this data with data from other apps, websites or data brokers, we build no advertising profiles, and we do not ask for ATT permission because none is needed. Programme terms: <a href="creators-en.html">Creator programme</a>.</p>
 
@@ -194,7 +216,7 @@
       <li>we do not use AI/ML solutions that process your data;</li>
       <li>we do not embed cookies or similar technologies for marketing purposes.</li>
     </ul>
-    <p>The third parties involved in the operation of the service are <strong>Apple</strong> (app distribution and payments), <strong>Google (Gmail)</strong> as our e-mail provider (handling contact), and <strong>Cloudflare</strong>, which hosts the endpoint that receives Apple's transaction notifications (see <a href="#kody">section 5</a>). Cloudflare does not store those notifications.</p>
+    <p>The third parties involved in the operation of the service are <strong>Apple</strong> (app distribution and payments), <strong>Google (Gmail)</strong> as our e-mail provider (handling contact), <strong>Cloudflare</strong>, which hosts the endpoint that receives Apple's transaction notifications (see <a href="#kody">section 5</a>), and <strong>GitHub (GitHub Pages)</strong> and <strong>Fastly</strong>, which host and deliver this website. Cloudflare does not store those notifications. The website has no forms, sets no cookies and runs no analytics — GitHub and Fastly process only the technical data inherent in serving a page (IP address, browser type, the address of the file requested) and their own server logs.</p>
 
     <h2 id="udostepnianie">9. Sharing of data</h2>
     <p>We do not sell personal data and we do not share it with third parties for marketing purposes. Data may be processed only by:</p>
@@ -202,10 +224,11 @@
       <li><strong>Apple</strong> — for app distribution and payment handling;</li>
       <li><strong>Google (Gmail)</strong> — as our e-mail provider, if you contact us;</li>
       <li><strong>Cloudflare</strong> — as the infrastructure provider for the endpoint that receives Apple's transaction notifications (it does not store them);</li>
+      <li><strong>GitHub (GitHub Pages)</strong> and <strong>Fastly</strong> — as the hosting and content delivery providers for this website, limited to the technical data inherent in serving it;</li>
       <li><strong>the bank</strong> holding our account and <strong>our accounting firm</strong> — solely for payouts and settlements with creators (see <a href="#tworcy">section 6</a>);</li>
       <li>competent authorities — only where required by law.</li>
     </ul>
-    <p>Using the services of Apple, Google and Cloudflare may involve transfers of data outside the European Economic Area (including to the USA). All three providers state that they apply the transfer mechanisms provided for in the GDPR, in particular the <strong>standard contractual clauses (SCC)</strong> approved by the European Commission, and all three are listed as participants in the <strong>EU–U.S. Data Privacy Framework</strong>. Details in the privacy policies of <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple</a>, <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google</a> and <a href="https://www.cloudflare.com/trust-hub/gdpr/" target="_blank" rel="noopener">Cloudflare</a>.</p>
+    <p>Using the services of Apple, Google, Cloudflare, GitHub and Fastly may involve transfers of data outside the European Economic Area (including to the USA). All of these providers state that they apply the transfer mechanisms provided for in the GDPR. <strong>Apple relies on the standard contractual clauses (SCC)</strong> approved by the European Commission for transfers out of the EEA and is <strong>not</strong> on the list of participants in the EU–U.S. Data Privacy Framework. <strong>Google, Cloudflare, GitHub and Fastly</strong> are participants in that framework and additionally rely on SCCs. Details in the privacy policies of <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple</a>, <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google</a>, <a href="https://www.cloudflare.com/trust-hub/gdpr/" target="_blank" rel="noopener">Cloudflare</a>, <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub</a> and <a href="https://www.fastly.com/data-privacy-framework" target="_blank" rel="noopener">Fastly</a>. The current status of any participant can be checked on the <a href="https://www.dataprivacyframework.gov/list" target="_blank" rel="noopener">programme's list</a>.</p>
 
     <h2 id="okres">10. Retention periods</h2>
     <ul>
@@ -219,13 +242,13 @@
     <h2 id="prawa">11. Your rights (GDPR)</h2>
     <p>To the extent that we process your data (when you contact us, when you have redeemed a code — see <a href="#kody">section 5</a> — or when you are a creator in the code programme, see <a href="#tworcy">section 6</a>), you have the right to: access your data, rectify it, erase it, restrict processing, data portability, object to processing and — where processing is based on consent — withdraw that consent.</p>
     <p>You also have the right to lodge a complaint with the supervisory authority: the <strong>President of the Personal Data Protection Office (PUODO)</strong>, ul. Stawki 2, 00-193 Warsaw, Poland.</p>
-    <p>To exercise your rights, write to <a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a>. If the matter concerns code programme data, include the <strong>transaction identifier from your App Store receipt</strong>: without it we cannot find the records, because we run no accounts and do not know your identity.</p>
+    <p>To exercise your rights, write to <a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a>. If the matter concerns code programme data, include the <strong>purchase date, the amount and currency, the name of the product and the country of your App Store</strong> (easiest: forward the receipt Apple e-mailed you). Without that we cannot find the records, because we run no accounts and do not know your identity. Step-by-step instructions: <a href="data-deletion-en.html">Data deletion</a>.</p>
 
     <h2 id="zgoda">12. Withdrawing consent</h2>
     <p>The app does not operate on the basis of consent: code programme data is processed on the basis of legitimate interest and accounting obligations rather than consent (see <a href="#kody">section 5</a>), and you may object to that processing. If features requiring consent appear in the future (e.g. a marketing newsletter), you will be able to withdraw your consent at any time — without affecting the lawfulness of processing carried out before the withdrawal — by writing to <a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a> or using the relevant option in the message or in the app.</p>
 
     <h2 id="usuwanie">13. Deleting data and accounts</h2>
-    <p>The app <strong>does not allow you to create an account</strong>, so there is no account to delete. To remove data stored locally, simply clear the app’s data or uninstall it. To have the e-mail correspondence you sent us deleted, write to <a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a>. If you claimed a reward with a code, you can use the same address to request deletion of the code programme settlement data, including the transaction identifier from your App Store receipt (see <a href="#kody">section 5</a>). Details: <a href="data-deletion-en.html">Data deletion</a>.</p>
+    <p>The app <strong>does not allow you to create an account</strong>, so there is no account to delete. To remove data stored locally, simply clear the app’s data or uninstall it. To have the e-mail correspondence you sent us deleted, write to <a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a>. If you claimed a reward with a code, you can use the same address to request deletion of the code programme settlement data, giving the date and amount of the purchase and the country of the store (see <a href="#kody">section 5</a>). Details: <a href="data-deletion-en.html">Data deletion</a>.</p>
 
     <h2 id="wiek">14. Age of users</h2>
     <p>The app is intended solely for <strong>adults (18+)</strong> — that is also its age rating in the App Store. Inside the app you can additionally switch off the most explicit cards with the “18+ cards” toggle in settings. The app is not directed at minors and we do not knowingly collect their data.</p>

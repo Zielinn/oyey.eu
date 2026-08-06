@@ -350,6 +350,17 @@ section{padding:80px 0;}
 .doc-body table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.95rem;}
 .doc-body th,.doc-body td{border:1px solid var(--border);padding:11px 13px;text-align:left;vertical-align:top;}
 .doc-body th{background:#f7eefc;color:var(--purple-deep);}
+/* Tabela szersza niż telefon MUSI mieć własny pasek przewijania: body ma
+   overflow-x:hidden, więc bez tego opakowania kolumny po prawej były ucinane
+   i nie dało się do nich dojechać (tabela RODO, kolumna „Twój udział"). */
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:18px 0;
+  border-radius:10px;overscroll-behavior-x:contain;}
+.table-scroll:focus-visible{outline:2px solid var(--pink);outline-offset:2px;}
+.table-scroll table{margin:0;}
+@media (max-width:640px){
+  .doc-body table{font-size:.88rem;}
+  .doc-body th,.doc-body td{padding:9px 10px;}
+}
 .toc{background:#f8f2fd;border:1px solid #ecdcfa;border-radius:16px;padding:20px 24px;margin-bottom:32px;}
 .toc h4{margin:0 0 8px;color:var(--purple-deep);}
 .toc ol{margin:0;padding-left:20px;}
