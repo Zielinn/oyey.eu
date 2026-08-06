@@ -36,7 +36,7 @@
   </div>
 
   <main class="doc-body">
-    <p class="updated">Wersja 1.0 · Data wejścia w życie: 24.07.2026</p>
+    <p class="updated">Wersja 1.1 · Data wejścia w życie: 06.08.2026</p>
 
     <div class="toc">
       <h4>Spis treści</h4>
@@ -45,6 +45,7 @@
         <li><a href="#zakres">Zakres — najważniejsze w skrócie</a></li>
         <li><a href="#dane">Jakie dane przetwarzamy i w jakim celu</a></li>
         <li><a href="#platnosci">Płatności i subskrypcje (Apple)</a></li>
+        <li><a href="#kody">Kody i program poleceń</a></li>
         <li><a href="#kontakt-support">Kontakt z pomocą i zgłoszenia błędów</a></li>
         <li><a href="#sdk">Usługi i SDK firm trzecich</a></li>
         <li><a href="#udostepnianie">Udostępnianie danych</a></li>
@@ -71,13 +72,14 @@
     <h2 id="zakres">2. Zakres — najważniejsze w skrócie</h2>
     <ul>
       <li><strong>Aplikacja nie wymaga zakładania konta ani logowania.</strong></li>
-      <li><strong>Aplikacja nie zbiera Twoich danych osobowych</strong> i nie profiluje użytkowników. Nie korzysta z lokalizacji, kamery, mikrofonu, kontaktów, danych zdrowotnych ani reklam.</li>
+      <li>Aplikacja <strong>nie profiluje użytkowników</strong> i nie prowadzi żadnego śledzenia. Nie korzysta z lokalizacji, kamery, mikrofonu, kontaktów, danych zdrowotnych ani reklam.</li>
+      <li>Jest <strong>jeden wyjątek</strong> od zasady „nie zbieramy danych": kody. Jeśli odbierzesz nagrodę kodem (od twórcy, rabatowym albo prezentowym), Twoje późniejsze zakupy w aplikacji niosą anonimowy identyfikator, po którym rozliczamy udział osoby, która ten kod udostępniła (zob. <a href="#kody">sekcja 5</a>). <strong>Bez zrealizowanego kodu ten identyfikator w ogóle nie powstaje.</strong></li>
       <li>Gry po pobraniu działają <strong>offline</strong>; treść i ustawienia (np. imiona graczy, poziom ostrości, wybór kar) zapisywane są <strong>lokalnie na Twoim urządzeniu</strong> i nie są nam przesyłane.</li>
       <li>Płatności i subskrypcje obsługuje <strong>Apple</strong> w ramach App Store. To Apple, a nie my, przetwarza dane transakcyjne i płatnicze (zob. sekcja 4).</li>
-      <li>Dane osobowe przetwarzamy tylko wtedy, gdy <strong>sam(a) się z nami skontaktujesz</strong> (np. e-mail do pomocy lub zgłoszenie błędu) — wówczas przetwarzamy dane, które nam przekażesz (zob. sekcja 5).</li>
+      <li>Dane osobowe przetwarzamy tylko wtedy, gdy <strong>sam(a) się z nami skontaktujesz</strong> (np. e-mail do pomocy lub zgłoszenie błędu) — wówczas przetwarzamy dane, które nam przekażesz (zob. sekcja 6).</li>
     </ul>
     <div class="note">
-      Ta polityka jest spójna z deklaracją „App Privacy" w App Store: aplikacja jest skonfigurowana jako <strong>„Data Not Collected"</strong> (dane nie są zbierane przez aplikację). Ewentualne dane związane z zakupem zbiera Apple w ramach własnej polityki prywatności.
+      Ta polityka jest spójna z deklaracją „App Privacy" w App Store. Aplikacja deklaruje dwie kategorie danych: <strong>Purchases → Purchase History</strong> oraz <strong>Identifiers → User ID</strong>, obie jako <strong>„Not Linked to You"</strong> (niepowiązane z Tobą), w celu <strong>App Functionality</strong>. Dotyczy to <strong>wyłącznie</strong> mechanizmu kodów opisanego w <a href="#kody">sekcji 5</a>. Sekcja „Data Used to Track You" jest pusta: nie łączymy tych danych z danymi z innych aplikacji, stron ani od brokerów danych.
     </div>
 
     <h2 id="dane">3. Jakie dane przetwarzamy i w jakim celu</h2>
@@ -129,13 +131,33 @@
       <li>zasady przetwarzania danych przez Apple opisuje <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Polityka prywatności Apple</a>;</li>
       <li>subskrypcją (w tym anulowaniem) i ewentualnymi zwrotami zarządzasz w ustawieniach Apple ID / App Store — szczegóły w <a href="terms.html#subskrypcja">Regulaminie (§ 6)</a>.</li>
     </ul>
-    <p>Otrzymujemy od Apple wyłącznie zbiorcze, statystyczne informacje o sprzedaży (np. liczba zakupów), które nie pozwalają na identyfikację konkretnego użytkownika.</p>
+    <p>Od Apple otrzymujemy raporty sprzedaży, a także powiadomienia o poszczególnych transakcjach w aplikacji (jaki produkt, kiedy, w jakim kraju, za jaką kwotę). Nie zawierają one Twojego imienia, adresu e-mail ani danych Twojego konta Apple. Powiadomienia te są nam potrzebne wyłącznie do rozliczenia programu kodów, opisanego w <a href="#kody">sekcji 5</a>.</p>
 
-    <h2 id="kontakt-support">5. Kontakt z pomocą i zgłoszenia błędów</h2>
+    <h2 id="kody">5. Kody i program poleceń</h2>
+    <p>W aplikacji można odebrać nagrodę kodem. Kody wydajemy w trzech sytuacjach: jako <strong>kod twórcy</strong> (osoby, która poleca Oyey w swoich mediach), jako <strong>kod rabatowy</strong> i jako <strong>prezent</strong>. Dla Ciebie działają identycznie i zawsze realizuje je App Store, a nie my.</p>
+
+    <p><strong>Co się dzieje po zrealizowaniu kodu.</strong> Aplikacja tworzy na Twoim urządzeniu losowy identyfikator (UUID) i dokłada go do Twoich kolejnych zakupów jako <code>appAccountToken</code>, czyli mechanizmem przewidzianym do tego celu przez Apple. Aplikacja nie wysyła go nigdzie sama: przekazuje go App Store razem z zakupem, a my dowiadujemy się o nim z podpisanego powiadomienia Apple.</p>
+
+    <p><strong>Czego ten identyfikator nie zawiera.</strong> Nie ma w nim imienia, nazwiska, adresu, adresu e-mail, numeru telefonu, identyfikatora urządzenia ani danych Twojego konta Apple. Nie da się z niego ustalić, kim jesteś — również nam. Jest to dana <strong>spseudonimizowana</strong>: sama nie identyfikuje osoby, ale traktujemy ją jako dane osobowe w rozumieniu RODO, bo teoretycznie mogłaby zostać powiązana z osobą przez Apple.</p>
+
+    <ul>
+      <li><strong>Zakres danych:</strong> identyfikator <code>appAccountToken</code>, identyfikator transakcji nadany przez Apple, identyfikator produktu, data zakupu, kwota i waluta, kraj sklepu, informacja o zwrocie oraz nazwa oferty, z której skorzystał kod.</li>
+      <li><strong>Cel:</strong> ustalenie i wypłata udziału należnego osobie, która Cię poleciła, oraz rozliczenie tego programu.</li>
+      <li><strong>Podstawa prawna:</strong> art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes administratora: rozliczenie programu partnerskiego) oraz art. 6 ust. 1 lit. c RODO w zakresie obowiązków księgowych i podatkowych.</li>
+      <li><strong>Okres przechowywania:</strong> 12 miesięcy od realizacji kodu (okno rozliczenia programu), a dane potrzebne do rozliczeń księgowych przez okres wymagany przepisami, tj. 5 lat licząc od końca roku podatkowego.</li>
+      <li><strong>Odbiorcy:</strong> dane pochodzą od Apple i pozostają w naszych systemach rozliczeniowych. Powiadomienia Apple odbiera nasz punkt końcowy utrzymywany w infrastrukturze <strong>Cloudflare</strong>, który ich <strong>nie przechowuje</strong> — jedynie potwierdza odbiór. <strong>Twórcy nie przekazujemy żadnych danych o pojedynczych transakcjach ani o osobach</strong>: dostaje wyłącznie łączną kwotę należnego udziału.</li>
+      <li><strong>Bez kodu nie ma danych:</strong> jeśli nie zrealizujesz żadnego kodu, żaden identyfikator nie powstaje i Twoje zakupy docierają do nas bez jakiegokolwiek oznaczenia.</li>
+    </ul>
+
+    <p><strong>Jak skorzystać z praw.</strong> Ponieważ nie prowadzimy kont i nie znamy Twojej tożsamości, nie umiemy odnaleźć Twoich danych na podstawie imienia ani adresu e-mail. Aby zażądać dostępu do danych albo ich usunięcia, napisz na <a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a> i dołącz <strong>identyfikator transakcji z paragonu App Store</strong> (App Store → Twoje konto → Historia zakupów). Usuniemy wszystkie pasujące zapisy poza tymi, których zatrzymania wymagają od nas przepisy księgowe. Szczegóły: <a href="data-deletion.html">Usuwanie danych</a>.</p>
+
+    <p><strong>Nie ma śledzenia.</strong> Tych danych nie łączymy z danymi z innych aplikacji, stron ani od brokerów danych, nie budujemy profili reklamowych i nie prosimy o zgodę ATT, bo nie jest potrzebna. Warunki programu dla twórców: <a href="creators.html">Program dla twórców</a>.</p>
+
+    <h2 id="kontakt-support">6. Kontakt z pomocą i zgłoszenia błędów</h2>
     <p>Gdy piszesz do nas e-mail (pomoc, pytanie, reklamacja, zgłoszenie błędu), przetwarzamy Twój adres e-mail oraz treść wiadomości — wyłącznie w celu udzielenia odpowiedzi i obsługi sprawy. Podanie tych danych jest dobrowolne, ale niezbędne, żebyśmy mogli się z Tobą skontaktować.</p>
     <p>Korespondencję prowadzimy z użyciem poczty e-mail dostarczanej przez <strong>Google (Gmail)</strong>. Twój e-mail przechowujemy tak długo, jak jest to potrzebne do obsługi sprawy oraz przez okres przedawnienia ewentualnych roszczeń.</p>
 
-    <h2 id="sdk">6. Usługi i SDK firm trzecich</h2>
+    <h2 id="sdk">7. Usługi i SDK firm trzecich</h2>
     <p>Według naszej wiedzy na dzień publikacji aplikacja <strong>nie korzysta</strong> z zewnętrznych narzędzi analitycznych, reklamowych ani śledzących (np. Google Analytics, Firebase, PostHog, sieci reklamowe, piksele). W szczególności:</p>
     <ul>
       <li>nie stosujemy śledzenia na potrzeby reklamy (App Tracking Transparency / IDFA);</li>
@@ -143,39 +165,41 @@
       <li>nie korzystamy z rozwiązań AI/ML przetwarzających Twoje dane;</li>
       <li>nie osadzamy plików cookie ani podobnych technologii w celach marketingowych.</li>
     </ul>
-    <p>Jedynymi podmiotami zewnętrznymi uczestniczącymi w działaniu usługi są <strong>Apple</strong> (dystrybucja aplikacji i płatności) oraz <strong>Google (Gmail)</strong> jako dostawca poczty (obsługa kontaktu).</p>
+    <p>Podmioty zewnętrzne uczestniczące w działaniu usługi to <strong>Apple</strong> (dystrybucja aplikacji i płatności), <strong>Google (Gmail)</strong> jako dostawca poczty (obsługa kontaktu) oraz <strong>Cloudflare</strong>, na którego infrastrukturze stoi punkt końcowy odbierający powiadomienia Apple o transakcjach (zob. <a href="#kody">sekcja 5</a>). Cloudflare tych powiadomień nie przechowuje.</p>
 
-    <h2 id="udostepnianie">7. Udostępnianie danych</h2>
+    <h2 id="udostepnianie">8. Udostępnianie danych</h2>
     <p>Nie sprzedajemy danych osobowych i nie udostępniamy ich podmiotom trzecim w celach marketingowych. Dane mogą być przetwarzane wyłącznie przez:</p>
     <ul>
       <li><strong>Apple</strong> — w zakresie dystrybucji aplikacji i obsługi płatności;</li>
       <li><strong>Google (Gmail)</strong> — jako dostawca poczty, jeżeli się z nami kontaktujesz;</li>
+      <li><strong>Cloudflare</strong> — jako dostawca infrastruktury punktu końcowego, który odbiera powiadomienia Apple o transakcjach (nie przechowuje ich);</li>
       <li>uprawnione organy — wyłącznie gdy wymagają tego przepisy prawa.</li>
     </ul>
     <p>Korzystanie z usług Apple oraz Google może wiązać się z przekazaniem danych poza Europejski Obszar Gospodarczy (m.in. do USA). Obaj dostawcy deklarują stosowanie mechanizmów transferu przewidzianych w RODO, w szczególności <strong>standardowych klauzul umownych (SCC)</strong> zatwierdzonych przez Komisję Europejską, a Apple i Google są uczestnikami programu <strong>EU–U.S. Data Privacy Framework</strong>. Szczegóły w politykach prywatności <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple</a> oraz <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google</a>.</p>
 
-    <h2 id="okres">8. Okres przechowywania</h2>
+    <h2 id="okres">9. Okres przechowywania</h2>
     <ul>
       <li>Dane w grze (imiona graczy, ustawienia) — przechowywane lokalnie na urządzeniu do czasu ich usunięcia przez Ciebie lub odinstalowania aplikacji.</li>
       <li>Korespondencja e-mail — przez czas obsługi sprawy i okres przedawnienia roszczeń.</li>
       <li>Dane transakcyjne związane z zakupami — po stronie Apple, zgodnie z politykami Apple i przepisami rozliczeniowymi.</li>
+      <li>Dane z programu kodów (zob. <a href="#kody">sekcja 5</a>) — 12 miesięcy od realizacji kodu, a w zakresie rozliczeń księgowych 5 lat licząc od końca roku podatkowego.</li>
     </ul>
 
-    <h2 id="prawa">9. Twoje prawa (RODO)</h2>
-    <p>W zakresie, w jakim przetwarzamy Twoje dane (tj. gdy się z nami kontaktujesz), przysługuje Ci prawo do: dostępu do danych, sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia danych, sprzeciwu oraz — jeśli przetwarzanie odbywa się na podstawie zgody — jej wycofania.</p>
+    <h2 id="prawa">10. Twoje prawa (RODO)</h2>
+    <p>W zakresie, w jakim przetwarzamy Twoje dane (gdy się z nami kontaktujesz albo gdy zrealizowałeś/aś kod — zob. <a href="#kody">sekcja 5</a>), przysługuje Ci prawo do: dostępu do danych, sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia danych, sprzeciwu oraz — jeśli przetwarzanie odbywa się na podstawie zgody — jej wycofania.</p>
     <p>Masz również prawo wniesienia skargi do organu nadzorczego: <strong>Prezes Urzędu Ochrony Danych Osobowych (PUODO)</strong>, ul. Stawki 2, 00-193 Warszawa.</p>
-    <p>Aby skorzystać z praw, napisz na <a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a>.</p>
+    <p>Aby skorzystać z praw, napisz na <a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a>. Jeśli sprawa dotyczy danych z programu kodów, dołącz <strong>identyfikator transakcji z paragonu App Store</strong> — bez niego nie umiemy odnaleźć zapisów, bo nie prowadzimy kont i nie znamy Twojej tożsamości.</p>
 
-    <h2 id="zgoda">10. Wycofanie zgody</h2>
-    <p>Aplikacja co do zasady nie działa w oparciu o zgody (nie zbiera danych). Jeżeli w przyszłości pojawią się funkcje wymagające zgody (np. newsletter marketingowy), będziesz mógł/mogła wycofać zgodę w każdej chwili — bez wpływu na zgodność z prawem przetwarzania sprzed wycofania — pisząc na <a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a> lub korzystając z odpowiedniej opcji w wiadomości/aplikacji.</p>
+    <h2 id="zgoda">11. Wycofanie zgody</h2>
+    <p>Aplikacja <strong>nie opiera się na zgodach</strong>: dane z programu kodów przetwarzamy na podstawie prawnie uzasadnionego interesu i obowiązków księgowych, a nie zgody (zob. <a href="#kody">sekcja 5</a>), i możesz wobec tego wnieść sprzeciw. Jeżeli w przyszłości pojawią się funkcje wymagające zgody (np. newsletter marketingowy), będziesz mógł/mogła wycofać zgodę w każdej chwili — bez wpływu na zgodność z prawem przetwarzania sprzed wycofania — pisząc na <a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a> lub korzystając z odpowiedniej opcji w wiadomości/aplikacji.</p>
 
-    <h2 id="usuwanie">11. Usunięcie danych i konta</h2>
-    <p>Aplikacja <strong>nie umożliwia zakładania konta</strong>, więc nie ma konta do usunięcia. Aby usunąć dane zapisane lokalnie, wystarczy usunąć dane aplikacji lub ją odinstalować. Aby usunąć korespondencję e-mail, którą do nas wysłałeś/aś, napisz na <a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a>. Szczegóły: <a href="data-deletion.html">Usuwanie danych</a>.</p>
+    <h2 id="usuwanie">12. Usunięcie danych i konta</h2>
+    <p>Aplikacja <strong>nie umożliwia zakładania konta</strong>, więc nie ma konta do usunięcia. Aby usunąć dane zapisane lokalnie, wystarczy usunąć dane aplikacji lub ją odinstalować. Aby usunąć korespondencję e-mail, którą do nas wysłałeś/aś, napisz na <a href="mailto:oyey.games@gmail.com">oyey.games@gmail.com</a>. Jeśli odebrałeś/aś nagrodę kodem, na ten sam adres możesz zażądać usunięcia danych rozliczeniowych z programu kodów, dołączając identyfikator transakcji z paragonu App Store (zob. <a href="#kody">sekcja 5</a>). Szczegóły: <a href="data-deletion.html">Usuwanie danych</a>.</p>
 
-    <h2 id="wiek">12. Wiek użytkownika</h2>
+    <h2 id="wiek">13. Wiek użytkownika</h2>
     <p>Aplikacja jest przeznaczona wyłącznie dla <strong>osób pełnoletnich (18+)</strong> — taką kategorię wiekową ma również w App Store. Wewnątrz aplikacji można dodatkowo wyłączyć najostrzejsze karty przełącznikiem „Karty 18+" w ustawieniach. Aplikacja nie jest kierowana do osób niepełnoletnich i nie zbieramy świadomie ich danych.</p>
 
-    <h2 id="zmiany">13. Zmiany polityki</h2>
+    <h2 id="zmiany">14. Zmiany polityki</h2>
     <p>Politykę możemy aktualizować (np. gdy zmienią się funkcje aplikacji lub dostawcy). Aktualna wersja jest publikowana pod adresem <a href="https://oyey.eu/privacy.html">https://oyey.eu/privacy.html</a> wraz z datą wejścia w życie. Istotne zmiany zasygnalizujemy w aplikacji lub na stronie.</p>
   </main>
 
