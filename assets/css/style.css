@@ -342,7 +342,7 @@ section{padding:80px 0;}
 .doc-hero h1{color:#fff;}
 .doc-hero p{color:#e2d0fb;margin:0;}
 .doc-body{max-width:840px;margin:0 auto;padding:52px 22px 84px;}
-.doc-body h2{font-size:1.5rem;margin-top:2.3em;}
+.doc-body h2{font-size:1.5rem;margin-top:2.3em;scroll-margin-top:90px;}
 .doc-body h3{font-size:1.15rem;margin-top:1.6em;color:var(--pink);}
 .doc-body p,.doc-body li{color:#3a2b4d;}
 .doc-body ul,.doc-body ol{padding-left:22px;}
