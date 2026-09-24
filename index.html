@@ -67,7 +67,7 @@
         <a href="#dlaczego">Dlaczego Oyey</a>
         <a href="support.html">Pomoc</a>
         <a href="privacy.html">Prywatność</a>
-        <a class="cta" href="#download">Pobierz</a>
+        <a class="cta" href="https://apps.apple.com/app/id6793657469" target="_blank" rel="noopener">Pobierz</a>
         <a href="index-en.html" class="lang-switch" hreflang="en" aria-label="English version">EN</a>
       </nav>
     </div>
@@ -88,7 +88,7 @@
           <span class="badge"><svg class="icon icon--fill"><use href="#ic-cards"/></svg> 7 gier na start</span>
         </div>
         <div class="btns" id="download-top">
-          <a class="btn btn--app" href="https://apps.apple.com/pl/app/id6793657469" target="_blank" rel="noopener" aria-label="Pobierz z App Store">
+          <a class="btn btn--app" href="https://apps.apple.com/app/id6793657469" target="_blank" rel="noopener" aria-label="Pobierz z App Store">
             <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><use href="#ic-apple"/></svg>
             <span class="store-txt"><span class="store-sub">Pobierz w</span><span class="store-main">App Store</span></span>
           </a>
@@ -318,7 +318,7 @@
         <h2>Gotowi na dziś wieczór?</h2>
         <p>Pobierz Oyey, wpiszcie imiona i zaczynajcie. Reszta zrobi się sama.</p>
         <div class="btns">
-          <a class="btn btn--yellow" href="https://apps.apple.com/pl/app/id6793657469" target="_blank" rel="noopener">
+          <a class="btn btn--yellow" href="https://apps.apple.com/app/id6793657469" target="_blank" rel="noopener">
             <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><use href="#ic-apple"/></svg>
             Pobierz z App Store
           </a>
@@ -362,7 +362,7 @@
   <!-- MASKOTKA W ROGU + DYMEK -->
   <div class="mascot-widget" id="mw" aria-hidden="true">
     <button class="mw-close" id="mw-close" aria-label="Zamknij">×</button>
-    <div class="mw-bubble">Gotowi na grę? <span class="mw-cta">Pobierz Oyey →</span></div>
+    <a class="mw-bubble" href="https://apps.apple.com/app/id6793657469" target="_blank" rel="noopener">Gotowi na grę? <span class="mw-cta">Pobierz Oyey →</span></a>
     <img class="mw-mascot" src="assets/img/mascot-full.png" alt="Maskotka Oyey" id="mw-mascot">
   </div>
 
@@ -387,9 +387,14 @@
     document.getElementById('mw-close').addEventListener('click', function(){
       mw.classList.remove('show'); mw.classList.add('hide'); sessionStorage.setItem('mwClosed','1');
     });
-    function goDl(){ var t=document.getElementById('download'); if(t){ t.scrollIntoView({behavior:'smooth'}); } }
-    document.getElementById('mw-mascot').addEventListener('click', goDl);
-    document.querySelector('.mw-bubble').addEventListener('click', goDl);
+    // Maskotka i dymek prowadza PROSTO DO SKLEPU (zgloszenie usera 24.09.2026).
+    // Wczesniej oba tylko przewijaly do sekcji #download, wiec przycisk
+    // „Pobierz" nigdy nie otwieral App Store. Dymek jest teraz zwyklym <a>,
+    // wiec dziala bez JS, na srodkowy przycisk i z klawiatury; handler
+    // zostaje juz tylko dla obrazka maskotki.
+    document.getElementById('mw-mascot').addEventListener('click', function(){
+      window.open('https://apps.apple.com/app/id6793657469', '_blank', 'noopener');
+    });
   })();
   </script>
 

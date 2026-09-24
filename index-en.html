@@ -67,7 +67,7 @@
         <a href="#dlaczego">Why Oyey</a>
         <a href="support-en.html">Support</a>
         <a href="privacy-en.html">Privacy</a>
-        <a class="cta" href="#download">Download</a>
+        <a class="cta" href="https://apps.apple.com/app/id6793657469" target="_blank" rel="noopener">Download</a>
         <a href="/" class="lang-switch" hreflang="pl" aria-label="Wersja polska">PL</a>
       </nav>
     </div>
@@ -362,7 +362,7 @@
   <!-- CORNER MASCOT + BUBBLE -->
   <div class="mascot-widget" id="mw" aria-hidden="true">
     <button class="mw-close" id="mw-close" aria-label="Close">×</button>
-    <div class="mw-bubble">Ready to play? <span class="mw-cta">Get Oyey →</span></div>
+    <a class="mw-bubble" href="https://apps.apple.com/app/id6793657469" target="_blank" rel="noopener">Ready to play? <span class="mw-cta">Get Oyey →</span></a>
     <img class="mw-mascot" src="assets/img/mascot-full.png" alt="Oyey mascot" id="mw-mascot">
   </div>
 
@@ -383,9 +383,14 @@
     document.getElementById('mw-close').addEventListener('click', function(){
       mw.classList.remove('show'); mw.classList.add('hide'); sessionStorage.setItem('mwClosed','1');
     });
-    function goDl(){ var t=document.getElementById('download'); if(t){ t.scrollIntoView({behavior:'smooth'}); } }
-    document.getElementById('mw-mascot').addEventListener('click', goDl);
-    document.querySelector('.mw-bubble').addEventListener('click', goDl);
+    // Maskotka i dymek prowadza PROSTO DO SKLEPU (zgloszenie usera 24.09.2026).
+    // Wczesniej oba tylko przewijaly do sekcji #download, wiec przycisk
+    // „Pobierz" nigdy nie otwieral App Store. Dymek jest teraz zwyklym <a>,
+    // wiec dziala bez JS, na srodkowy przycisk i z klawiatury; handler
+    // zostaje juz tylko dla obrazka maskotki.
+    document.getElementById('mw-mascot').addEventListener('click', function(){
+      window.open('https://apps.apple.com/app/id6793657469', '_blank', 'noopener');
+    });
   })();
   </script>
 
