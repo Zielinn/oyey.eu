@@ -426,3 +426,18 @@ section{padding:80px 0;}
   .contact-card .row .k{min-width:0;}
 }
 @media (max-width:520px){.occasions{grid-template-columns:1fr;}}
+
+/* Panel dla przegladarek wbudowanych (TikTok/Instagram/Facebook).
+   Te webview blokuja i apps.apple.com, i schemat itms-apps://, wiec
+   jedyne wyjscie to wyprowadzic czlowieka do Safari. */
+.tt-panel{position:fixed;inset:0;z-index:200;display:none;place-items:center;padding:24px;background:rgba(20,5,35,.88);backdrop-filter:blur(6px);}
+.tt-panel.show{display:grid;}
+.tt-box{background:var(--purple-deep,#300D4D);color:var(--cream,#FAF0D4);border:1px solid rgba(255,255,255,.16);border-radius:22px;padding:26px 22px;max-width:380px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.45);}
+/* ⚠️ kolor MUSI byc jawny: globalna regula h1,h2,h3,h4 ustawia
+   --purple-deep, czyli nagłowek bylby ciemny na ciemnym pudelku. */
+.tt-box h3{font-family:'Baloo 2',system-ui,sans-serif;font-weight:800;font-size:1.35rem;margin:0 0 10px;color:var(--cream,#FAF0D4);}
+.tt-box p{margin:0 0 14px;line-height:1.45;font-size:1rem;opacity:.95;}
+.tt-kropki{display:inline-block;background:rgba(255,255,255,.16);border-radius:8px;padding:1px 9px;font-weight:800;}
+.tt-box .tt-alt{font-size:.92rem;opacity:.75;margin-top:4px;}
+.tt-btn{display:block;width:100%;margin:6px 0 0;padding:13px 16px;border:0;border-radius:14px;font-family:'Baloo 2',system-ui,sans-serif;font-weight:800;font-size:1rem;cursor:pointer;background:var(--yellow,#F7B617);color:var(--purple-deep,#300D4D);}
+.tt-btn--ghost{background:transparent;color:var(--cream,#FAF0D4);border:1px solid rgba(255,255,255,.22);margin-top:10px;}

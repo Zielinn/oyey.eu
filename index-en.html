@@ -366,6 +366,17 @@
     <img class="mw-mascot" src="assets/img/mascot-full.png" alt="Oyey mascot" id="mw-mascot">
   </div>
 
+  <!-- In-app browser (TikTok/IG/FB) blocks the App Store — send them to Safari -->
+  <div class="tt-panel" id="tt-panel" role="dialog" aria-modal="true" aria-labelledby="tt-tytul">
+    <div class="tt-box">
+      <h3 id="tt-tytul">Open in your browser</h3>
+      <p>This browser won't let you reach the App Store. Tap <span class="tt-kropki">•••</span> in the top right and choose <strong>"Open in browser"</strong>.</p>
+      <button class="tt-btn" id="tt-kopiuj" type="button">Copy page link</button>
+      <button class="tt-btn tt-btn--ghost" id="tt-zamknij" type="button">Close</button>
+      <p class="tt-alt">Or just search for <strong>Oyey</strong> in the App Store.</p>
+    </div>
+  </div>
+
   <script>
   (function(){
     var els = document.querySelectorAll('.reveal');
@@ -388,48 +399,66 @@
     // „Pobierz" nigdy nie otwieral App Store. Dymek jest teraz zwyklym <a>,
     // wiec dziala bez JS, na srodkowy przycisk i z klawiatury; handler
     // zostaje juz tylko dla obrazka maskotki.
-    // ——— OTWIERANIE APP STORE ———
-    // Cel (user, 25.09.2026): klik w „Pobierz" ma od razu wylądować
-    // w App Store, także u kogoś, kto wszedł z TikToka.
+    // ——— PRZEGLADARKA WBUDOWANA vs APP STORE ———
+    // User sprawdzil 25.09 na iPhonie: klik w „Pobierz" z przegladarki
+    // TikToka konczy sie BLEDEM albo PUSTA STRONA. TikTok blokuje i
+    // https://apps.apple.com, i schemat itms-apps:// — czyli z tego
+    // webview NIE DA SIE dojsc do sklepu zadna droga.
     //
-    // ⚠️ Dlaczego nie wystarczy zwykły <a target="_blank">: przeglądarka
-    // wbudowana w TikToka nie otwiera nowych kart, więc `target="_blank"`
-    // bywa po cichu ignorowany, a nawigację do apps.apple.com TikTok
-    // potrafi zablokować. Klik ginie bez żadnego komunikatu.
-    //
-    // `itms-apps://` to NIE jest nawigacja webowa, tylko przekazanie
-    // schematu do systemu — przechodzi tam, gdzie zwykły adres pada,
-    // i otwiera APLIKACJĘ App Store zamiast strony WWW sklepu.
-    var SKLEP_WEB = 'https://apps.apple.com/app/id6793657469';
-    var SKLEP_APP = 'itms-apps://apps.apple.com/app/id6793657469';
-    var IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-              (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    // ⚠️ Nie probuj tego „naprawic" kolejnym przekierowaniem. Kazda proba
+    // nawigacji konczy sie bialym ekranem, ktory wyglada jak zepsuta
+    // strona. Jedyne wyjscie to wyprowadzic czlowieka do Safari.
+    var WEBVIEW = /musical_ly|BytedanceWebview|TikTok|Instagram|FBAN|FBAV|Line\/|KAKAOTALK/i
+                    .test(navigator.userAgent);
+    var panel = document.getElementById('tt-panel');
 
-    function otworzSklep(){
-      if(!IOS){ window.open(SKLEP_WEB, '_blank', 'noopener'); return; }
-      window.location.href = SKLEP_APP;
-      // Jeśli system przejął schemat, strona idzie w tło i `hidden` jest
-      // prawdą — wtedy NIE robimy drugiego skoku. Ten warunek jest tu po to,
-      // żeby po powrocie z App Store nie wyrzucić człowieka drugi raz.
-      setTimeout(function(){
-        if(!document.hidden){ window.location.href = SKLEP_WEB; }
-      }, 800);
+    // ⚠️ Obsluga SAMEGO panelu (zamykanie, kopiowanie) wisi ZAWSZE, nie tylko
+    // w webview. Panel jest poza webview i tak ukryty, wiec nic to nie psuje,
+    // a dzieki temu da sie te przyciski przetestowac w zwyklej przegladarce.
+    // Gdy siedzialy pod `if(WEBVIEW)`, byly nietestowalne nigdzie poza TikTokiem.
+    if(panel){
+      document.getElementById('tt-zamknij').addEventListener('click', function(){
+        panel.classList.remove('show');
+      });
+      panel.addEventListener('click', function(e){
+        if(e.target === panel){ panel.classList.remove('show'); }
+      });
+
+      document.getElementById('tt-kopiuj').addEventListener('click', function(){
+        var btn = this, adres = location.origin + location.pathname;
+        function udalo(){ btn.textContent = 'Copied \u2713'; setTimeout(function(){ btn.textContent = 'Copy page link'; }, 1800); }
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(adres).then(udalo, zapas);
+        } else { zapas(); }
+        // Schowek bywa niedostepny w webview — wtedy stara metoda przez
+        // zaznaczenie pola tekstowego.
+        function zapas(){
+          var pole = document.createElement('input');
+          pole.value = adres; pole.setAttribute('readonly','');
+          pole.style.position='fixed'; pole.style.opacity='0';
+          document.body.appendChild(pole); pole.select();
+          try { document.execCommand('copy'); udalo(); } catch(err){}
+          document.body.removeChild(pole);
+        }
+      });
     }
 
-    // Przechwytujemy KAŻDY link do sklepu na stronie (hero, sekcja
-    // download, dymek maskotki) — jednym handlerem, w fazie przechwytywania,
-    // żeby zadziałać przed domyślną akcją <a>.
-    if(IOS){
+    // Przechwytywanie klikow w linki sklepu — TYLKO w webview.
+    if(WEBVIEW && panel){
       document.addEventListener('click', function(e){
         var el = e.target;
         var a = (el && el.closest) ? el.closest('a[href*="apps.apple.com"]') : null;
         if(!a) return;
         e.preventDefault();
-        otworzSklep();
+        panel.classList.add('show');
       }, true);
     }
 
-    document.getElementById('mw-mascot').addEventListener('click', otworzSklep);
+    // Maskotka: poza webview otwiera sklep normalnie, w webview panel.
+    document.getElementById('mw-mascot').addEventListener('click', function(){
+      if(WEBVIEW && panel){ panel.classList.add('show'); return; }
+      window.open('https://apps.apple.com/app/id6793657469', '_blank', 'noopener');
+    });
   })();
   </script>
 
