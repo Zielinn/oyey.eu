@@ -388,9 +388,48 @@
     // „Pobierz" nigdy nie otwieral App Store. Dymek jest teraz zwyklym <a>,
     // wiec dziala bez JS, na srodkowy przycisk i z klawiatury; handler
     // zostaje juz tylko dla obrazka maskotki.
-    document.getElementById('mw-mascot').addEventListener('click', function(){
-      window.open('https://apps.apple.com/app/id6793657469', '_blank', 'noopener');
-    });
+    // ——— OTWIERANIE APP STORE ———
+    // Cel (user, 25.09.2026): klik w „Pobierz" ma od razu wylądować
+    // w App Store, także u kogoś, kto wszedł z TikToka.
+    //
+    // ⚠️ Dlaczego nie wystarczy zwykły <a target="_blank">: przeglądarka
+    // wbudowana w TikToka nie otwiera nowych kart, więc `target="_blank"`
+    // bywa po cichu ignorowany, a nawigację do apps.apple.com TikTok
+    // potrafi zablokować. Klik ginie bez żadnego komunikatu.
+    //
+    // `itms-apps://` to NIE jest nawigacja webowa, tylko przekazanie
+    // schematu do systemu — przechodzi tam, gdzie zwykły adres pada,
+    // i otwiera APLIKACJĘ App Store zamiast strony WWW sklepu.
+    var SKLEP_WEB = 'https://apps.apple.com/app/id6793657469';
+    var SKLEP_APP = 'itms-apps://apps.apple.com/app/id6793657469';
+    var IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+              (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+    function otworzSklep(){
+      if(!IOS){ window.open(SKLEP_WEB, '_blank', 'noopener'); return; }
+      window.location.href = SKLEP_APP;
+      // Jeśli system przejął schemat, strona idzie w tło i `hidden` jest
+      // prawdą — wtedy NIE robimy drugiego skoku. Ten warunek jest tu po to,
+      // żeby po powrocie z App Store nie wyrzucić człowieka drugi raz.
+      setTimeout(function(){
+        if(!document.hidden){ window.location.href = SKLEP_WEB; }
+      }, 800);
+    }
+
+    // Przechwytujemy KAŻDY link do sklepu na stronie (hero, sekcja
+    // download, dymek maskotki) — jednym handlerem, w fazie przechwytywania,
+    // żeby zadziałać przed domyślną akcją <a>.
+    if(IOS){
+      document.addEventListener('click', function(e){
+        var el = e.target;
+        var a = (el && el.closest) ? el.closest('a[href*="apps.apple.com"]') : null;
+        if(!a) return;
+        e.preventDefault();
+        otworzSklep();
+      }, true);
+    }
+
+    document.getElementById('mw-mascot').addEventListener('click', otworzSklep);
   })();
   </script>
 
