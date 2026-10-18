@@ -412,8 +412,35 @@
     // `itms-apps://` to NIE jest nawigacja webowa, tylko przekazanie
     // schematu do systemu — przechodzi tam, gdzie zwykły adres pada,
     // i otwiera APLIKACJĘ App Store zamiast strony WWW sklepu.
-    var SKLEP_WEB = 'https://apps.apple.com/app/id6793657469';
-    var SKLEP_APP = 'itms-apps://apps.apple.com/app/id6793657469';
+    //
+    // ——— KAMPANIA (user 18.10.2026: link kampanii App Store `tiktok_pl`) ———
+    // Link w bio prowadzi na oyey.eu/?ct=tiktok_pl (Instagram: ?ct=instagram).
+    // Strona dokleja do linków App Store token dostawcy i nazwę kampanii,
+    // żeby App Analytics liczyło osobno pobrania i zakupy z naszego bio.
+    // `ct` przechodzi tylko z liter, cyfr i podkreślnika (do 40 znaków),
+    // a w ramach wizyty pamiętamy go w sessionStorage (podstrony bez ?ct).
+    var PT = '129196735';
+    var ct = null;
+    try {
+      var mCt = /[?&]ct=([^&#]*)/.exec(window.location.search);
+      var zUrl = mCt ? decodeURIComponent(mCt[1]) : null;
+      if (zUrl && /^[A-Za-z0-9_]{1,40}$/.test(zUrl)) {
+        ct = zUrl;
+        sessionStorage.setItem('oyey_ct', zUrl);
+      } else {
+        var zSesji = sessionStorage.getItem('oyey_ct');
+        if (zSesji && /^[A-Za-z0-9_]{1,40}$/.test(zSesji)) { ct = zSesji; }
+      }
+    } catch (bladCt) {}
+    var KAMPANIA = ct ? ('?pt=' + PT + '&ct=' + ct + '&mt=8') : '';
+    var SCIEZKA = ct ? 'apple-store/id6793657469' : 'id6793657469';
+    var SKLEP_WEB = 'https://apps.apple.com/app/' + SCIEZKA + KAMPANIA;
+    var SKLEP_APP = 'itms-apps://apps.apple.com/app/' + SCIEZKA + KAMPANIA;
+    if (ct) {
+      // Także zwykłe <a> (desktop, Android, środkowy przycisk) niosą kampanię.
+      var linkiSklepu = document.querySelectorAll('a[href*="apps.apple.com"]');
+      for (var iL = 0; iL < linkiSklepu.length; iL++) { linkiSklepu[iL].href = SKLEP_WEB; }
+    }
     var IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
               (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
