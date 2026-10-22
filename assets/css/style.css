@@ -154,6 +154,15 @@ img{max-width:100%;height:auto;display:block;}
 /* shine */
 .btn--app::after,.btn--primary::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);transform:skewX(-18deg);transition:left .6s;}
 .btn--app:hover::after,.btn--primary:hover::after{left:130%;}
+/* Google Play: oficjalna plakietka bez przeróbek (play.google.com/intl/en_us/badges).
+   Pliki PL i EN mają inny przezroczysty margines, stąd osobne wymiary: widoczna
+   plakietka ma ok. 71 px wysokości, tyle co czarny przycisk App Store (wytyczne
+   Google: nie mniejsza niż plakietki innych sklepów, wolne pole ok. 1/4 wysokości). */
+.btn-gp{display:inline-flex;align-self:center;border-radius:10px;transition:transform .15s ease;}
+.btn-gp:hover{transform:translateY(-2px);}
+.gp-badge{display:block;width:auto;max-width:none;}
+.gp-badge--pl{height:93px;margin:-11px 0;}
+.gp-badge--en{height:106px;margin:-17px -14px;}
 
 /* ---------- HERO ---------- */
 .hero{position:relative;overflow:hidden;color:#fff;padding:104px 0 96px;

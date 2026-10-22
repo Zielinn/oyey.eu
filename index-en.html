@@ -28,7 +28,7 @@
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/img/favicon-180.png">
-  <link rel="stylesheet" href="assets/css/style.css?v=11">
+  <link rel="stylesheet" href="assets/css/style.css?v=12">
   <script src="assets/js/nav.js" defer></script>
 </head>
 <body>
@@ -92,9 +92,12 @@
             <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><use href="#ic-apple"/></svg>
             <span class="store-txt"><span class="store-sub">Download on the</span><span class="store-main">App Store</span></span>
           </a>
+          <a class="btn-gp" href="https://play.google.com/store/apps/details?id=com.qreinq.oyey" target="_blank" rel="noopener">
+            <img class="gp-badge gp-badge--en" src="assets/img/badges/google-play-en.png" width="646" height="250" alt="Get it on Google Play">
+          </a>
           <a class="btn btn--ghost" href="#gry">See the games</a>
         </div>
-        <p class="hero__note">Available on iPhone, in six languages: English, Polish, Czech, Slovak, Ukrainian and German.</p>
+        <p class="hero__note">Available on iPhone and Android, in six languages: English, Polish, Czech, Slovak, Ukrainian and German.</p>
       </div>
       <div class="hero__mascot">
         <img src="assets/img/mascot-happy.png" alt="Oyey mascot" loading="eager">
@@ -330,6 +333,9 @@
             <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><use href="#ic-apple"/></svg>
             Download on the App Store
           </a>
+          <a class="btn-gp" href="https://play.google.com/store/apps/details?id=com.qreinq.oyey" target="_blank" rel="noopener">
+            <img class="gp-badge gp-badge--en" src="assets/img/badges/google-play-en.png" width="646" height="250" alt="Get it on Google Play" loading="lazy">
+          </a>
         </div>
       </div>
     </div>
@@ -346,6 +352,7 @@
           </div>
           <p style="max-width:34ch;">Party games on your phone. Questions and dares for the whole crew. No accounts, offline, made with love.</p>
           <p style="font-size:.85rem;">Game for adults (18+). The hottest cards can be turned off in settings.</p>
+          <p style="font-size:.78rem;">Google Play and the Google Play logo are trademarks of Google LLC.</p>
         </div>
         <div>
           <h4>Product</h4>
@@ -448,6 +455,32 @@
       var linkiSklepu = document.querySelectorAll('a[href*="apps.apple.com"]');
       for (var iL = 0; iL < linkiSklepu.length; iL++) { linkiSklepu[iL].href = SKLEP_WEB; }
     }
+
+    // ——— GOOGLE PLAY (apka w Play od 20–21.10.2026) ———
+    // Kampanię `ct` niesie Install Referrer, więc Play Console (Pozyskiwanie
+    // użytkowników, kanały UTM) liczy osobno wejścia i instalacje z bio TikToka
+    // i IG. Cała wartość referrer jest zakodowana (= i & jako %3D i %26).
+    var SKLEP_PLAY = 'https://play.google.com/store/apps/details?id=com.qreinq.oyey' +
+      (ct ? '&referrer=' + encodeURIComponent('utm_source=' + ct + '&utm_medium=bio') : '');
+    if (ct) {
+      var linkiPlay = document.querySelectorAll('a[href*="play.google.com"]');
+      for (var iP = 0; iP < linkiPlay.length; iP++) { linkiPlay[iP].href = SKLEP_PLAY; }
+    }
+    // Android: Google Play idzie na pierwsze miejsce, App Store zostaje drugi,
+    // a „Download" w menu i dymek maskotki prowadzą do Play. Na iPhonie
+    // i desktopie zostaje kolejność z HTML (App Store pierwszy).
+    var ANDROID = /Android/i.test(navigator.userAgent);
+    if (ANDROID) {
+      var grupy = document.querySelectorAll('.btns');
+      for (var iG = 0; iG < grupy.length; iG++) {
+        var doPlay = grupy[iG].querySelector('a[href*="play.google.com"]');
+        var doApple = grupy[iG].querySelector('a[href*="apps.apple.com"]');
+        if (doPlay && doApple) { grupy[iG].insertBefore(doPlay, doApple); }
+      }
+      var pojedyncze = document.querySelectorAll('.nav .cta, .mw-bubble');
+      for (var iJ = 0; iJ < pojedyncze.length; iJ++) { pojedyncze[iJ].href = SKLEP_PLAY; }
+    }
+
     var WEBVIEW = /musical_ly|BytedanceWebview|TikTok|Instagram|FBAN|FBAV|Line\/|KAKAOTALK/i
                     .test(navigator.userAgent);
     var panel = document.getElementById('tt-panel');
@@ -484,6 +517,9 @@
     }
 
     // Przechwytywanie klikow w linki sklepu — TYLKO w webview.
+    // Linkow Google Play panel NIE przechwytuje: na Androidzie z TikToka i IG
+    // link do Play idzie wprost. ⚠️ Do 22.10 niesprawdzone na telefonie
+    // z Androidem — jesli TikTok tam tez blokuje sklep, dopiac tu panel.
     if(WEBVIEW && panel){
       document.addEventListener('click', function(e){
         var el = e.target;
@@ -494,8 +530,10 @@
       }, true);
     }
 
-    // Maskotka: poza webview otwiera sklep normalnie, w webview panel.
+    // Maskotka: na Androidzie Google Play, poza tym App Store, a w webview
+    // na iPhonie panel.
     document.getElementById('mw-mascot').addEventListener('click', function(){
+      if(ANDROID){ window.location.href = SKLEP_PLAY; return; }
       if(WEBVIEW && panel){ panel.classList.add('show'); return; }
       window.open(SKLEP_WEB, '_blank', 'noopener');
     });
