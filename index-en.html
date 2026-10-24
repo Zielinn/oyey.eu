@@ -92,7 +92,7 @@
             <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><use href="#ic-apple"/></svg>
             <span class="store-txt"><span class="store-sub">Download on the</span><span class="store-main">App Store</span></span>
           </a>
-          <a class="btn-gp" href="https://play.google.com/store/apps/details?id=com.qreinq.oyey" target="_blank" rel="noopener">
+          <a class="btn-gp" href="https://play.google.com/store/apps/details?id=eu.oyey" target="_blank" rel="noopener">
             <img class="gp-badge gp-badge--en" src="assets/img/badges/google-play-en.png" width="646" height="250" alt="Get it on Google Play">
           </a>
           <a class="btn btn--ghost" href="#gry">See the games</a>
@@ -333,7 +333,7 @@
             <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><use href="#ic-apple"/></svg>
             Download on the App Store
           </a>
-          <a class="btn-gp" href="https://play.google.com/store/apps/details?id=com.qreinq.oyey" target="_blank" rel="noopener">
+          <a class="btn-gp" href="https://play.google.com/store/apps/details?id=eu.oyey" target="_blank" rel="noopener">
             <img class="gp-badge gp-badge--en" src="assets/img/badges/google-play-en.png" width="646" height="250" alt="Get it on Google Play" loading="lazy">
           </a>
         </div>
@@ -456,11 +456,11 @@
       for (var iL = 0; iL < linkiSklepu.length; iL++) { linkiSklepu[iL].href = SKLEP_WEB; }
     }
 
-    // ——— GOOGLE PLAY (apka w Play od 20–21.10.2026) ———
+    // ——— GOOGLE PLAY (eu.oyey od 24.10.2026; stara com.qreinq.oyey wycofana 23.10) ———
     // Kampanię `ct` niesie Install Referrer, więc Play Console (Pozyskiwanie
     // użytkowników, kanały UTM) liczy osobno wejścia i instalacje z bio TikToka
     // i IG. Cała wartość referrer jest zakodowana (= i & jako %3D i %26).
-    var SKLEP_PLAY = 'https://play.google.com/store/apps/details?id=com.qreinq.oyey' +
+    var SKLEP_PLAY = 'https://play.google.com/store/apps/details?id=eu.oyey' +
       (ct ? '&referrer=' + encodeURIComponent('utm_source=' + ct + '&utm_medium=bio') : '');
     if (ct) {
       var linkiPlay = document.querySelectorAll('a[href*="play.google.com"]');
