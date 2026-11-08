@@ -20,11 +20,17 @@ strona/
 - `index.html` (`https://oyey.eu/`) to strona główna PO ANGIELSKU i domyślna (`x-default`).
 - `pl/index.html` (`https://oyey.eu/pl/`) to strona główna po polsku; ścieżki w niej idą przez `../`.
 - `index-en.html` to już tylko przekierowanie na `/` z całym zapytaniem i `#kotwicą`
-  (linki `index-en.html?ct=instagram_en` itd. z bio dalej działają), `noindex`, canonical na `/`.
+  (linki `index-en.html?ct=instagram_en` itd. z bio dalej działają), `noindex`, canonical na `/`,
+  z tymi samymi `og:`/`twitter:` co `/`, żeby podgląd udostępnionego linku miał obrazek i opis.
 - Skrypt w `<head>` strony `/` przenosi na `/pl/` (z `?ct=…` i `#…`), gdy: adres ma `?lang=pl`
   (`?lang=en` zostawia angielską, tak linkuje „EN” z `/pl/`); w tej wizycie czytano już polską
   stronę (`sessionStorage` `oyey_lang`, zapisuje go `assets/js/nav.js` na każdej stronie według
-  `<html lang>`); albo przeglądarka ma polski na liście języków lub strefę `Europe/Warsaw`.
+  `<html lang>`, także po powrocie „Wstecz” z pamięci przeglądarki); albo przeglądarka ma polski
+  na liście języków lub strefę `Europe/Warsaw`. Kolejność: `?lang` przed wszystkim, potem
+  powrót „Wstecz”/„Dalej” (nigdy nie przekierowuje, bo `/` trafia do historii tylko wtedy, gdy
+  ktoś widział angielską), potem `oyey_lang`, na końcu przeglądarka. `oyey_lang = en` (ktoś
+  w tej wizycie czytał angielską stronę) zostawia angielską nawet przy polskiej przeglądarce.
+  Gdy `sessionStorage` nie działa, `?lang=en` zostaje w adresie.
   Bez cookies i `localStorage`, bo polityka prywatności mówi, że strona cookies nie ustawia.
   GitHub Pages nie ma logiki po stronie serwera, więc wykrywanie jest tylko w JS.
 - Dokumenty (`privacy`, `terms`, `support`, `data-deletion` i ich `-en`) zostają pod tymi samymi

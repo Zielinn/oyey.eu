@@ -9,11 +9,19 @@
      przenosimy, gdy:
        1) adres ma ?lang=pl; ?lang=en zostawia angielską (tak linkuje
           przełącznik „EN” z /pl/). Wybór pamiętamy na tę wizytę, a sam
-          parametr lang znika z adresu, reszta zapytania zostaje;
-       2) w tej wizycie ktoś czytał już polską stronę (sessionStorage
+          parametr lang znika z adresu, reszta zapytania zostaje. Gdy
+          sessionStorage nie działa, ?lang=en zostaje w adresie, żeby
+          odświeżenie dalej dawało angielską;
+       2) powrót przez „Wstecz”/„Dalej” nie przekierowuje: przekierowanie
+          robi location.replace, więc „/” jest w historii tylko wtedy, gdy
+          ktoś naprawdę widział tu angielską. Bez tego przeglądarka bez
+          pamięci stron wstecz (WebView Instagrama, TikToka) odbijałaby
+          z „/” z powrotem na /pl/;
+       3) w tej wizycie ktoś czytał już polską stronę (sessionStorage
           oyey_lang = pl; zapisuje go assets/js/nav.js na każdej stronie
-          według <html lang>), a oyey_lang = en zostawia angielską;
-       3) inaczej: przeglądarka ma polski na liście języków albo strefę
+          według <html lang>), a oyey_lang = en zostawia angielską nawet
+          przy polskiej przeglądarce;
+       4) inaczej: przeglądarka ma polski na liście języków albo strefę
           czasową Europe/Warsaw.
      Zapytanie (np. ?ct=tiktok_pl z bio) i #kotwica jadą z przekierowaniem.
      Bez cookies i localStorage: polityka prywatności mówi, że strona nie
@@ -31,15 +39,21 @@
         if (mLang) { wybor = mLang[1].toLowerCase(); } else { reszta.push(czesci[i]); }
       }
       var zapytanie = reszta.length ? '?' + reszta.join('&') : '';
-      var zSesji = null;
+      var zSesji = null, zapisany = false, wstecz = false;
       try {
-        if (wybor) { sessionStorage.setItem(KLUCZ, wybor); }
+        if (wybor) { sessionStorage.setItem(KLUCZ, wybor); zapisany = true; }
         else { zSesji = sessionStorage.getItem(KLUCZ); }
       } catch (bladSesji) {}
+      try {
+        var wpis = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+        wstecz = wpis ? (wpis.type === 'back_forward') : !!(performance.navigation && performance.navigation.type === 2);
+      } catch (bladHistorii) {}
       var naPl = false;
       if (wybor) {
         naPl = (wybor === 'pl');
-        if (!naPl) { history.replaceState(history.state, '', loc.pathname + zapytanie + loc.hash); }
+        if (!naPl && zapisany) { history.replaceState(history.state, '', loc.pathname + zapytanie + loc.hash); }
+      } else if (wstecz) {
+        naPl = false;
       } else if (zSesji === 'pl' || zSesji === 'en') {
         naPl = (zSesji === 'pl');
       } else {
@@ -126,7 +140,7 @@
         <a href="support-en.html">Support</a>
         <a href="privacy-en.html">Privacy</a>
         <a class="cta" href="https://apps.apple.com/app/id6793657469" target="_blank" rel="noopener">Download</a>
-        <a href="/pl/" class="lang-switch" hreflang="pl" aria-label="Wersja polska">PL</a>
+        <a href="/pl/" class="lang-switch" hreflang="pl" aria-label="Polish version">PL</a>
       </nav>
     </div>
   </header>
@@ -469,11 +483,16 @@
     } else { els.forEach(function(e){ e.classList.add('in'); }); }
 
     var mw = document.getElementById('mw');
-    if(sessionStorage.getItem('mwClosed') !== '1'){
+    // sessionStorage w try: zablokowany (dane witryn wyłączone, część
+    // WebView) rzucał wyjątek i zatrzymywał resztę skryptu (ct, Play, panel).
+    var mwZamkniety = false;
+    try { mwZamkniety = (sessionStorage.getItem('mwClosed') === '1'); } catch (bladMw) {}
+    if(!mwZamkniety){
       setTimeout(function(){ mw.classList.add('show'); mw.setAttribute('aria-hidden','false'); }, 1800);
     }
     document.getElementById('mw-close').addEventListener('click', function(){
-      mw.classList.remove('show'); mw.classList.add('hide'); sessionStorage.setItem('mwClosed','1');
+      mw.classList.remove('show'); mw.classList.add('hide');
+      try { sessionStorage.setItem('mwClosed','1'); } catch (bladMw) {}
     });
     // Maskotka i dymek prowadza PROSTO DO SKLEPU (zgloszenie usera 24.09.2026).
     // Wczesniej oba tylko przewijaly do sekcji #download, wiec przycisk
