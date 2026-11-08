@@ -407,11 +407,16 @@
 
     // maskotka w rogu
     var mw = document.getElementById('mw');
-    if(sessionStorage.getItem('mwClosed') !== '1'){
+    // sessionStorage w try: zablokowany (dane witryn wyłączone, część
+    // WebView) rzucał wyjątek i zatrzymywał resztę skryptu (ct, Play, panel).
+    var mwZamkniety = false;
+    try { mwZamkniety = (sessionStorage.getItem('mwClosed') === '1'); } catch (bladMw) {}
+    if(!mwZamkniety){
       setTimeout(function(){ mw.classList.add('show'); mw.setAttribute('aria-hidden','false'); }, 1800);
     }
     document.getElementById('mw-close').addEventListener('click', function(){
-      mw.classList.remove('show'); mw.classList.add('hide'); sessionStorage.setItem('mwClosed','1');
+      mw.classList.remove('show'); mw.classList.add('hide');
+      try { sessionStorage.setItem('mwClosed','1'); } catch (bladMw) {}
     });
     // Maskotka i dymek prowadza PROSTO DO SKLEPU (zgloszenie usera 24.09.2026).
     // Wczesniej oba tylko przewijaly do sekcji #download, wiec przycisk

@@ -2,12 +2,19 @@
    (pl albo en) w sessionStorage 'oyey_lang'. Skrypt w <head> strony „/”
    czyta go przy następnym wejściu na „/”: kto czytał po polsku, wraca na
    /pl/, kto po angielsku, zostaje na angielskiej. Bez cookies i localStorage.
-   Przekierowanie index-en.html nie ładuje tego pliku, więc nic nie zapisuje. */
+   Przekierowanie index-en.html nie ładuje tego pliku, więc nic nie zapisuje.
+   Strona przywrócona „Wstecz”/„Dalej” z pamięci przeglądarki (bfcache) nie
+   uruchamia skryptów od nowa, dlatego zapis powtarza też pageshow: inaczej
+   wizyta miałaby język strony, z której ktoś właśnie wrócił. */
 (function () {
-  try {
-    var jezyk = (document.documentElement.getAttribute('lang') || '').toLowerCase();
-    if (jezyk === 'pl' || jezyk === 'en') { sessionStorage.setItem('oyey_lang', jezyk); }
-  } catch (e) {}
+  function zapisz() {
+    try {
+      var jezyk = (document.documentElement.getAttribute('lang') || '').toLowerCase();
+      if (jezyk === 'pl' || jezyk === 'en') { sessionStorage.setItem('oyey_lang', jezyk); }
+    } catch (e) {}
+  }
+  zapisz();
+  window.addEventListener('pageshow', function (e) { if (e.persisted) zapisz(); });
 })();
 
 /* Oyey — pływający notch/kapsuła + spójne mobilne menu (morph z notcha) */
