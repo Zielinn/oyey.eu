@@ -16,6 +16,23 @@ strona/
     └── img/              # logo + maskotki (PNG)
 ```
 
+## Języki: angielska pod `/`, polska pod `/pl/` (od 08.11.2026, decyzja właściciela)
+- `index.html` (`https://oyey.eu/`) to strona główna PO ANGIELSKU i domyślna (`x-default`).
+- `pl/index.html` (`https://oyey.eu/pl/`) to strona główna po polsku; ścieżki w niej idą przez `../`.
+- `index-en.html` to już tylko przekierowanie na `/` z całym zapytaniem i `#kotwicą`
+  (linki `index-en.html?ct=instagram_en` itd. z bio dalej działają), `noindex`, canonical na `/`.
+- Skrypt w `<head>` strony `/` przenosi na `/pl/` (z `?ct=…` i `#…`), gdy: adres ma `?lang=pl`
+  (`?lang=en` zostawia angielską, tak linkuje „EN” z `/pl/`); w tej wizycie czytano już polską
+  stronę (`sessionStorage` `oyey_lang`, zapisuje go `assets/js/nav.js` na każdej stronie według
+  `<html lang>`); albo przeglądarka ma polski na liście języków lub strefę `Europe/Warsaw`.
+  Bez cookies i `localStorage`, bo polityka prywatności mówi, że strona cookies nie ustawia.
+  GitHub Pages nie ma logiki po stronie serwera, więc wykrywanie jest tylko w JS.
+- Dokumenty (`privacy`, `terms`, `support`, `data-deletion` i ich `-en`) zostają pod tymi samymi
+  adresami: są wpisane w App Store Connect, Google Play i w wydanych apkach (`OyeyLinks.swift`
+  składa `https://oyey.eu/<nazwa>.html` dla polskiego UI i `<nazwa>-en.html` dla reszty).
+  Zmieniły się tylko linki do strony głównej (polskie na `/pl/`, angielskie na `/`)
+  i `x-default` na wersję `-en`.
+
 ## Publikacja (żeby URL był publiczny)
 Wgraj cały folder `strona/` na hosting pod domeną `oyey.eu`. Docelowe URL-e:
 - Privacy Policy URL: `https://oyey.eu/privacy.html`  (lub `/privacy` po konfiguracji serwera)
