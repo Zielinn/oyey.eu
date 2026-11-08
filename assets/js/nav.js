@@ -1,3 +1,15 @@
+/* Język tej wizyty (08.11.2026): każda strona zapisuje swój <html lang>
+   (pl albo en) w sessionStorage 'oyey_lang'. Skrypt w <head> strony „/”
+   czyta go przy następnym wejściu na „/”: kto czytał po polsku, wraca na
+   /pl/, kto po angielsku, zostaje na angielskiej. Bez cookies i localStorage.
+   Przekierowanie index-en.html nie ładuje tego pliku, więc nic nie zapisuje. */
+(function () {
+  try {
+    var jezyk = (document.documentElement.getAttribute('lang') || '').toLowerCase();
+    if (jezyk === 'pl' || jezyk === 'en') { sessionStorage.setItem('oyey_lang', jezyk); }
+  } catch (e) {}
+})();
+
 /* Oyey — pływający notch/kapsuła + spójne mobilne menu (morph z notcha) */
 (function () {
   var nav = document.querySelector('.nav');
