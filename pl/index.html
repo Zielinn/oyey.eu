@@ -494,12 +494,12 @@
       for (var iJ = 0; iJ < pojedyncze.length; iJ++) { pojedyncze[iJ].href = SKLEP_PLAY; }
     }
 
-    // ——— LICZNIK ODWIEDZIN (właściciel 09.11.2026, polityka prywatności 1.5) ———
+    // ——— LICZNIK ODWIEDZIN (polityka prywatności 1.5) ———
     // Strona wysyła do Workera oyey-notifications (POST /licznik) tylko:
     // zdarzenie („wejscie” = otwarcie strony, „appstore” / „play” = klik
     // w przycisk sklepu, także „Download” w menu, dymek i obrazek maskotki,
     // „kopiuj” = przycisk w panelu przeglądarki wbudowanej), oznaczenie linku
-    // `ct` (to samo, które wyżej idzie do sklepów) i język strony. Worker
+    // `ct` (tylko z adresu tej strony, nigdy z sessionStorage) i język strony. Worker
     // dodaje jedynkę do licznika dnia; rodzaj urządzenia i przeglądarkę
     // wbudowaną rozpoznaje sam z User-Agenta, którego nie zapisuje.
     // Bez IP, bez cookies i bez nowych kluczy w sessionStorage/localStorage,
@@ -517,16 +517,26 @@
     //  - nie przy przejściu z innej podstrony oyey.eu („Start” z polityki,
     //    przełącznik „EN” z /pl/). Wyjątek: przejście ze strony głównej „/”
     //    albo ze starego index-en.html, bo tak wygląda automatyczne
-    //    przeniesienie (location.replace zostawia je jako referrer);
+    //    przeniesienie (location.replace zostawia je jako referrer). Ta sama
+    //    ścieżka się nie liczy (logo na „/” prowadzi na „/”), bo
+    //    automatyczne przeniesienie zawsze zmienia ścieżkę;
     //  - strony otwartej w tle na zapas (prerender) nie liczymy, dopóki ktoś
     //    jej nie zobaczy.
     // Wysyłka przez sendBeacon (przeżywa przejście do sklepu), zapasowo fetch
     // z keepalive; każdy błąd połykamy, nawigacja nigdy na nic nie czeka.
     var LICZNIK = 'https://oyey-notifications.oyey-notifications.workers.dev/licznik';
     var STRONA = /^pl/i.test(document.documentElement.getAttribute('lang') || '') ? 'pl' : 'en';
+    // Do licznika tylko `ct` z adresu tej strony, nigdy z sessionStorage:
+    // oyey_ct służy kampanii w linkach sklepów, nie statystyce.
+    var CT_ADRES = '';
+    try {
+      var mCtL = /[?&]ct=([^&#]*)/.exec(location.search);
+      var zAdresu = mCtL ? decodeURIComponent(mCtL[1]) : '';
+      if (/^[A-Za-z0-9_]{1,40}$/.test(zAdresu)) { CT_ADRES = zAdresu; }
+    } catch (bladCtL) {}
     function licz(zdarzenie) {
       try {
-        var tresc = JSON.stringify({ z: zdarzenie, ct: ct || '', s: STRONA });
+        var tresc = JSON.stringify({ z: zdarzenie, ct: CT_ADRES, s: STRONA });
         var poszlo = false;
         try {
           poszlo = !!(navigator.sendBeacon && navigator.sendBeacon(LICZNIK, new Blob([tresc], { type: 'text/plain' })));
@@ -548,7 +558,7 @@
       try {
         if (document.referrer) {
           var skad = new URL(document.referrer);
-          if (skad.origin === location.origin && !/^\/(index(-en)?\.html)?$/.test(skad.pathname)) return false;
+          if (skad.origin === location.origin && (skad.pathname === location.pathname || !/^\/(index(-en)?\.html)?$/.test(skad.pathname))) return false;
         }
       } catch (bladSkad) {}
       return true;
