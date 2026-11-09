@@ -568,7 +568,7 @@
     }
 
     // ——— LICZNIK ODWIEDZIN (polityka prywatności 1.5) ———
-    // Strona wysyła do Workera oyey-notifications (POST /licznik) tylko:
+    // Strona wysyła do Workera oyey-licznik (POST /licznik) tylko:
     // zdarzenie („wejscie” = otwarcie strony, „appstore” / „play” = klik
     // w przycisk sklepu, także „Download” w menu, dymek i obrazek maskotki,
     // „kopiuj” = przycisk w panelu przeglądarki wbudowanej), oznaczenie linku
@@ -597,7 +597,7 @@
     //    jej nie zobaczy.
     // Wysyłka przez sendBeacon (przeżywa przejście do sklepu), zapasowo fetch
     // z keepalive; każdy błąd połykamy, nawigacja nigdy na nic nie czeka.
-    var LICZNIK = 'https://oyey-notifications.oyey-notifications.workers.dev/licznik';
+    var LICZNIK = 'https://oyey-licznik.oyey-notifications.workers.dev/licznik';
     var STRONA = /^pl/i.test(document.documentElement.getAttribute('lang') || '') ? 'pl' : 'en';
     // Do licznika tylko `ct` z adresu tej strony, nigdy z sessionStorage:
     // oyey_ct służy kampanii w linkach sklepów, nie statystyce.

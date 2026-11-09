@@ -42,9 +42,9 @@ strona/
 ## Licznik odwiedzin (polityka prywatności 1.5)
 - `index.html` i `pl/index.html` (ten sam blok „LICZNIK ODWIEDZIN” na dole strony) wysyłają
   `navigator.sendBeacon` (zapasowo `fetch` z `keepalive`) na
-  `https://oyey-notifications.oyey-notifications.workers.dev/licznik`, treść `text/plain`:
+  `https://oyey-licznik.oyey-notifications.workers.dev/licznik` (osobny Worker `oyey-licznik`), treść `text/plain`:
   `{"z": "wejscie"|"appstore"|"play"|"kopiuj", "ct": "<ct albo pusty>", "s": "en"|"pl"}`.
-  Worker (`~/Oyey/server`) sumuje to w D1 per dzień, link, zdarzenie, język, urządzenie
+  Worker (`~/Oyey/server/licznik`) sumuje to w D1 per dzień, link, zdarzenie, język, urządzenie
   i przeglądarkę wbudowaną; IP i User-Agenta nie zapisuje. Podsumowanie: dzienny skrót na Telegramie.
 - „wejscie” raz na otwarcie: nie na `/`, gdy skrypt w `<head>` przenosi na `/pl/`
   (`window.oyeyNaPl`), nie przy odświeżeniu ani „Wstecz”/„Dalej”, nie przy przejściu z innej
@@ -61,6 +61,11 @@ strona/
   (np. `?ct=anna_dm`): wtedy liczniki stałyby się danymi osobowymi i polityka byłaby fałszywa.
 - Żadnych nowych kluczy w `sessionStorage`/`localStorage` ani cookies. Zmiana tu = zmiana
   polityki prywatności (sekcja 8, `#strona`).
+- ⚠️ Kolejność publikacji: najpierw Worker (`cd ~/Oyey/server/licznik && npx wrangler deploy`
+  i sekret `STRONA_TOKEN`, opis w `~/Oyey/server/licznik/README.md`), potem
+  `curl -X POST .../licznik -H 'Origin: https://oyey.eu'` musi dać 204, dopiero wtedy scalenie
+  na `main`. W dniu publikacji wpisz datę wejścia w życie w `privacy.html` i `privacy-en.html`
+  („Wersja 1.5 · Data wejścia w życie: DD.MM.RRRR”, „Effective date: D Month YYYY”).
 
 ## Publikacja (żeby URL był publiczny)
 Wgraj cały folder `strona/` na hosting pod domeną `oyey.eu`. Docelowe URL-e:
