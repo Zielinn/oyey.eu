@@ -39,6 +39,23 @@ strona/
   Zmieniły się tylko linki do strony głównej (polskie na `/pl/`, angielskie na `/`)
   i `x-default` na wersję `-en`.
 
+## Licznik odwiedzin (od 09.11.2026, polityka prywatności 1.5)
+- `index.html` i `pl/index.html` (ten sam blok „LICZNIK ODWIEDZIN” na dole strony) wysyłają
+  `navigator.sendBeacon` (zapasowo `fetch` z `keepalive`) na
+  `https://oyey-notifications.oyey-notifications.workers.dev/licznik`, treść `text/plain`:
+  `{"z": "wejscie"|"appstore"|"play"|"kopiuj", "ct": "<ct albo pusty>", "s": "en"|"pl"}`.
+  Worker (`~/Oyey/server`) sumuje to w D1 per dzień, link, zdarzenie, język, urządzenie
+  i przeglądarkę wbudowaną; IP i User-Agenta nie zapisuje. Podsumowanie: dzienny skrót na Telegramie.
+- „wejscie” raz na otwarcie: nie na `/`, gdy skrypt w `<head>` przenosi na `/pl/`
+  (`window.oyeyNaPl`), nie przy odświeżeniu ani „Wstecz”/„Dalej”, nie przy przejściu z innej
+  podstrony (np. „Start” z polityki, „EN” z `/pl/`); przejście z `/` i `index-en.html` liczy się,
+  bo tak wygląda automatyczne przeniesienie. Ręczne „PL” na `/` liczy więc wizytę drugi raz.
+- „appstore”/„play”: każdy klik (także środkowy) w link do `apps.apple.com`/`play.google.com`
+  i obrazek maskotki; w przeglądarce wbudowanej na iPhonie klik w App Store otwiera panel,
+  a i tak liczy się jako „appstore”. „kopiuj”: przycisk w tym panelu.
+- Żadnych nowych kluczy w `sessionStorage`/`localStorage` ani cookies. Zmiana tu = zmiana
+  polityki prywatności (sekcja 8, `#strona`).
+
 ## Publikacja (żeby URL był publiczny)
 Wgraj cały folder `strona/` na hosting pod domeną `oyey.eu`. Docelowe URL-e:
 - Privacy Policy URL: `https://oyey.eu/privacy.html`  (lub `/privacy` po konfiguracji serwera)

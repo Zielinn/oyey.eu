@@ -24,6 +24,8 @@
        4) inaczej: przeglądarka ma polski na liście języków albo strefę
           czasową Europe/Warsaw.
      Zapytanie (np. ?ct=tiktok_pl z bio) i #kotwica jadą z przekierowaniem.
+     Przy przekierowaniu ustawiamy window.oyeyNaPl: licznik odwiedzin na dole
+     strony wtedy nie liczy wejścia na „/”, liczy je dopiero /pl/.
      Bez cookies i localStorage: polityka prywatności mówi, że strona nie
      ustawia cookies; sessionStorage na jedną wizytę jak przy `ct`.
      location.replace nie dokłada wpisu w historii, więc „Wstecz” nie
@@ -71,6 +73,9 @@
         html.style.visibility = 'hidden';
         setTimeout(function () { html.style.visibility = ''; }, 3000);
         loc.replace('/pl/' + zapytanie + loc.hash);
+        // Licznik odwiedzin na dole strony nie liczy tego wejścia na „/”:
+        // policzy je /pl/, dokąd właśnie przenosimy.
+        window.oyeyNaPl = true;
       }
     } catch (blad) { html.style.visibility = ''; }
   })();
@@ -562,6 +567,85 @@
       for (var iJ = 0; iJ < pojedyncze.length; iJ++) { pojedyncze[iJ].href = SKLEP_PLAY; }
     }
 
+    // ——— LICZNIK ODWIEDZIN (właściciel 09.11.2026, polityka prywatności 1.5) ———
+    // Strona wysyła do Workera oyey-notifications (POST /licznik) tylko:
+    // zdarzenie („wejscie” = otwarcie strony, „appstore” / „play” = klik
+    // w przycisk sklepu, także „Download” w menu, dymek i obrazek maskotki,
+    // „kopiuj” = przycisk w panelu przeglądarki wbudowanej), oznaczenie linku
+    // `ct` (to samo, które wyżej idzie do sklepów) i język strony. Worker
+    // dodaje jedynkę do licznika dnia; rodzaj urządzenia i przeglądarkę
+    // wbudowaną rozpoznaje sam z User-Agenta, którego nie zapisuje.
+    // Bez IP, bez cookies i bez nowych kluczy w sessionStorage/localStorage,
+    // dlatego bez banera zgód. Polityka (privacy*.html, sekcja 8) opisuje
+    // dokładnie to: zmiana tutaj = zmiana polityki.
+    // Klik w App Store w przeglądarce wbudowanej na iPhonie też liczymy jako
+    // „appstore”, choć otwiera panel zamiast sklepu (Worker ma flagę
+    // przeglądarki wbudowanej, a wyjście do Safari widać po „kopiuj”).
+    // Wejście liczymy raz na prawdziwe otwarcie strony:
+    //  - nie na „/”, gdy skrypt w <head> przenosi na /pl/ (window.oyeyNaPl):
+    //    tę wizytę liczy /pl/;
+    //  - nie przy „Wstecz”/„Dalej” ani odświeżeniu (typ nawigacji); strona
+    //    przywrócona z pamięci przeglądarki (bfcache) skryptów nie uruchamia,
+    //    więc tu niczego nie wysyła;
+    //  - nie przy przejściu z innej podstrony oyey.eu („Start” z polityki,
+    //    przełącznik „EN” z /pl/). Wyjątek: przejście ze strony głównej „/”
+    //    albo ze starego index-en.html, bo tak wygląda automatyczne
+    //    przeniesienie (location.replace zostawia je jako referrer);
+    //  - strony otwartej w tle na zapas (prerender) nie liczymy, dopóki ktoś
+    //    jej nie zobaczy.
+    // Wysyłka przez sendBeacon (przeżywa przejście do sklepu), zapasowo fetch
+    // z keepalive; każdy błąd połykamy, nawigacja nigdy na nic nie czeka.
+    var LICZNIK = 'https://oyey-notifications.oyey-notifications.workers.dev/licznik';
+    var STRONA = /^pl/i.test(document.documentElement.getAttribute('lang') || '') ? 'pl' : 'en';
+    function licz(zdarzenie) {
+      try {
+        var tresc = JSON.stringify({ z: zdarzenie, ct: ct || '', s: STRONA });
+        var poszlo = false;
+        try {
+          poszlo = !!(navigator.sendBeacon && navigator.sendBeacon(LICZNIK, new Blob([tresc], { type: 'text/plain' })));
+        } catch (bladBeacon) {}
+        if (!poszlo && window.fetch) {
+          fetch(LICZNIK, { method: 'POST', body: tresc, mode: 'no-cors', credentials: 'omit', keepalive: true })
+            .catch(function () {});
+        }
+      } catch (bladLicznika) {}
+    }
+    function liczycWejscie() {
+      if (window.oyeyNaPl) return false;
+      try {
+        var nawigacja = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+        var typ = nawigacja ? nawigacja.type
+          : (performance.navigation ? ({ 1: 'reload', 2: 'back_forward' })[performance.navigation.type] : '');
+        if (typ === 'reload' || typ === 'back_forward') return false;
+      } catch (bladTypu) {}
+      try {
+        if (document.referrer) {
+          var skad = new URL(document.referrer);
+          if (skad.origin === location.origin && !/^\/(index(-en)?\.html)?$/.test(skad.pathname)) return false;
+        }
+      } catch (bladSkad) {}
+      return true;
+    }
+    if (liczycWejscie()) {
+      if (document.prerendering) {
+        document.addEventListener('prerenderingchange', function () { licz('wejscie'); }, { once: true });
+      } else { licz('wejscie'); }
+    }
+    // Klik w link sklepu: jeden nasłuch na całym dokumencie w fazie capture,
+    // więc liczy każdy link do App Store i Google Play (także te, które
+    // Android przestawia na Play) i działa przed panelem przeglądarki
+    // wbudowanej. Środkowy przycisk myszy to auxclick. Niczego nie blokuje.
+    function klikSklepu(e) {
+      try {
+        var a = (e.target && e.target.closest) ? e.target.closest('a[href]') : null;
+        if (!a) return;
+        if (a.hostname === 'apps.apple.com') { licz('appstore'); }
+        else if (a.hostname === 'play.google.com') { licz('play'); }
+      } catch (bladKliku) {}
+    }
+    document.addEventListener('click', function (e) { if (!e.button) klikSklepu(e); }, true);
+    document.addEventListener('auxclick', function (e) { if (e.button === 1) klikSklepu(e); }, true);
+
     var WEBVIEW = /musical_ly|BytedanceWebview|TikTok|Instagram|FBAN|FBAV|Line\/|KAKAOTALK/i
                     .test(navigator.userAgent);
     var panel = document.getElementById('tt-panel');
@@ -579,6 +663,7 @@
       });
 
       document.getElementById('tt-kopiuj').addEventListener('click', function(){
+        licz('kopiuj');
         var btn = this, adres = location.origin + location.pathname + (ct ? '?ct=' + ct : '');
         function udalo(){ btn.textContent = 'Copied \u2713'; setTimeout(function(){ btn.textContent = 'Copy page link'; }, 1800); }
         if(navigator.clipboard && navigator.clipboard.writeText){
@@ -614,6 +699,7 @@
     // Maskotka: na Androidzie Google Play, poza tym App Store, a w webview
     // na iPhonie panel.
     document.getElementById('mw-mascot').addEventListener('click', function(){
+      licz(ANDROID ? 'play' : 'appstore');
       if(ANDROID){ window.location.href = SKLEP_PLAY; return; }
       if(WEBVIEW && panel){ panel.classList.add('show'); return; }
       window.open(SKLEP_WEB, '_blank', 'noopener');
