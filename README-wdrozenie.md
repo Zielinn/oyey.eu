@@ -39,6 +39,34 @@ strona/
   Zmieniły się tylko linki do strony głównej (polskie na `/pl/`, angielskie na `/`)
   i `x-default` na wersję `-en`.
 
+## Licznik odwiedzin (polityka prywatności 1.5)
+- `index.html` i `pl/index.html` (ten sam blok „LICZNIK ODWIEDZIN” na dole strony) wysyłają
+  `navigator.sendBeacon` (zapasowo `fetch` z `keepalive`) na
+  `https://oyey-licznik.oyey-notifications.workers.dev/licznik` (osobny Worker `oyey-licznik`), treść `text/plain`:
+  `{"z": "wejscie"|"appstore"|"play"|"kopiuj", "ct": "<ct albo pusty>", "s": "en"|"pl"}`.
+  Worker (`~/Oyey/server/licznik`) sumuje to w D1 per dzień, link, zdarzenie, język, urządzenie
+  i przeglądarkę wbudowaną; IP i User-Agenta nie zapisuje. Podsumowanie: dzienny skrót na Telegramie.
+- „wejscie” raz na otwarcie: nie na `/`, gdy skrypt w `<head>` przenosi na `/pl/`
+  (`window.oyeyNaPl`), nie przy odświeżeniu ani „Wstecz”/„Dalej”, nie przy przejściu z innej
+  podstrony (np. „Start” z polityki, „EN” z `/pl/`); przejście z `/` i `index-en.html` liczy się,
+  bo tak wygląda automatyczne przeniesienie, ale nie z tej samej ścieżki (logo `/` na `/`).
+  Ręczne „PL” na `/` liczy więc wizytę drugi raz: „wejscie” z `s=pl` obejmuje też takie
+  ręczne przełączenia z `/`.
+- „appstore”/„play”: każdy klik (także środkowy) w link do `apps.apple.com`/`play.google.com`
+  i obrazek maskotki; w przeglądarce wbudowanej na iPhonie klik w App Store otwiera panel,
+  a i tak liczy się jako „appstore”. „kopiuj”: przycisk w tym panelu.
+- `ct` do licznika tylko z adresu strony, nie z `sessionStorage` (`oyey_ct` służy linkom sklepów).
+  Klik w sklep po powrocie z podstrony bez `?ct` idzie więc z pustym `ct`.
+- Oznaczenia `ct` nadajemy kanałom (profil, film, kampania), NIGDY pojedynczym osobom
+  (np. `?ct=anna_dm`): wtedy liczniki stałyby się danymi osobowymi i polityka byłaby fałszywa.
+- Żadnych nowych kluczy w `sessionStorage`/`localStorage` ani cookies. Zmiana tu = zmiana
+  polityki prywatności (sekcja 8, `#strona`).
+- ⚠️ Kolejność publikacji: najpierw Worker (`cd ~/Oyey/server/licznik && npx wrangler deploy`
+  i sekret `STRONA_TOKEN`, opis w `~/Oyey/server/licznik/README.md`), potem
+  `curl -X POST .../licznik -H 'Origin: https://oyey.eu'` musi dać 204, dopiero wtedy scalenie
+  na `main`. W dniu publikacji wpisz datę wejścia w życie w `privacy.html` i `privacy-en.html`
+  („Wersja 1.5 · Data wejścia w życie: DD.MM.RRRR”, „Effective date: D Month YYYY”).
+
 ## Publikacja (żeby URL był publiczny)
 Wgraj cały folder `strona/` na hosting pod domeną `oyey.eu`. Docelowe URL-e:
 - Privacy Policy URL: `https://oyey.eu/privacy.html`  (lub `/privacy` po konfiguracji serwera)
